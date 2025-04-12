@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeetCode Flashcards</title>
+  <link href="style.css" rel="stylesheet">
+  <script type="module" src="main.js"></script>
+  <style>
+    .flip-card-container {
+      perspective: 1000px;
+    }
+    .flip-card {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+    .flip-card.flipped {
+      transform: rotateY(180deg);
+    }
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      overflow: hidden;
+    }
+    .flip-card-front {
+      background-color: white;
+      z-index: 2;
+    }
+    .flip-card-back {
+      background-color: #2d3748;
+      color: white;
+      transform: rotateY(180deg);
+    }
+    .tab-content {
+      height: calc(100% - 120px);
+      overflow-y: auto;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    .flip-card-container {
+      perspective: 1000px;
+      width: 100%;
+      max-width: 600px;
+      height: 600px;
+      margin: 0 auto;
+    }
+    .flip-card-front, .flip-card-back {
+      border: 1px solid #ccc;
+      min-height: 500px; /* Ensure minimum height */
+    }
+    /* Add scrollbar styling for code blocks */
+    #code-content pre {
+      max-height: 400px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+    /* Loading indicator */
+    .loading-spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 2s linear infinite;
+      margin: 20px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+  <header class="bg-gray-800 text-white shadow-md">
+    <div class="container mx-auto py-4 px-6">
+      <h1 class="text-2xl font-bold">LeetCode Flashcards</h1>
+    </div>
+  </header>
+  <main class="flex-grow container mx-auto p-6">
+    <div id="topic-section">
+      <h2 class="text-xl font-semibold mb-6">Select a Topic</h2>
+      <div id="topic-grid" class="grid-container">
+        <!-- Topics will be populated here -->
+        <div class="loading-spinner"></div>
+      </div>
+    </div>
+    <div id="flashcard-section" class="hidden">
+      <div class="mb-6">
+        <button id="back-button" class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded">Back to Topics</button>
+        <h2 id="current-topic" class="text-xl font-semibold mt-4"></h2>
+        <div class="flex justify-between items-center mt-2">
+          <p id="problem-counter" class="text-gray-600"></p>
+          <div class="flex gap-2">
+            <button id="prev-button" class="bg-gray-200 px-3 py-1 rounded disabled:opacity-50">Previous</button> 
+            <button id="next-button" class="bg-gray-200 px-3 py-1 rounded disabled:opacity-50">Next</button>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card-container w-full max-w-3xl aspect-square mx-auto">
+        <div id="flashcard" class="flip-card">
+          <div class="flip-card-front rounded-xl shadow-lg">
+            <div class="p-5 bg-blue-600 text-white flex justify-between items-center">
+              <h3 id="card-title" class="font-bold text-xl"></h3><span id="card-difficulty" class="px-2 py-1 rounded-full text-xs font-semibold"></span>
+            </div>
+            <div class="border-b">
+              <div class="flex">
+                <button id="question-tab" class="px-4 py-2 border-b-2 border-blue-500 text-blue-600">Question</button> 
+                <button id="hint-tab" class="px-4 py-2 border-b-2 border-transparent">Hint</button>
+              </div>
+            </div>
+            <div class="tab-content p-5">
+              <div id="question-content" class="text-gray-700"></div>
+              <div id="hint-content" class="text-gray-700 hidden"></div>
+            </div>
+            <div class="absolute bottom-4 left-0 right-0 text-center text-gray-500 text-sm">
+              Click to flip
+            </div>
+          </div>
+          <div class="flip-card-back rounded-xl shadow-lg">
+            <div class="p-5 bg-gray-800 text-white flex justify-between items-center">
+              <h3 id="card-title-back" class="font-bold text-xl"></h3>
+            </div>
+            <div class="border-b border-gray-600">
+              <div class="flex">
+                <button id="one-liner-tab" class="px-4 py-2 border-b-2 border-blue-300 text-blue-300">One-liner</button>
+                <button id="three-liner-tab" class="px-4 py-2 border-b-2 border-transparent text-gray-300">3-liner</button>
+                <button id="mnemonic-tab" class="px-4 py-2 border-b-2 border-transparent text-gray-300">Mnemonic</button>
+                <button id="code-tab" class="px-4 py-2 border-b-2 border-transparent text-gray-300">Code</button>
+              </div>
+            </div>
+            <div class="tab-content p-5">
+              <div id="one-liner-content" class="text-white"></div>
+              <div id="three-liner-content" class="text-white hidden"></div>
+              <div id="mnemonic-content" class="text-white hidden"></div>
+              <div id="code-content" class="hidden">
+                <pre id="code-block" class="font-mono text-sm bg-gray-900 p-4 rounded text-white overflow-auto"></pre>
+              </div>
+            </div>
+            <div class="absolute bottom-4 left-0 right-0 text-center text-gray-400 text-sm">
+              Click to flip back
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="bg-gray-800 text-white p-4 mt-8">
+    <div class="container mx-auto text-center text-sm">
+      <p>© 2025 LeetCode Flashcards - Master Algorithms & Data Structures</p>
+    </div>
+  </footer>
+</body>
+</html>
