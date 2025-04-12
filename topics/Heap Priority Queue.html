@@ -1,0 +1,331 @@
+### 1. **Kth Largest Element in a Stream**
+
+**Problem:**  
+Design a class to find the kth largest element in a stream.
+
+**Solution:**
+```python
+import heapq
+
+class KthLargest:
+    def __init__(self, k, nums):
+        self.k = k
+        self.min_heap = nums
+        heapq.heapify(self.min_heap)
+        while len(self.min_heap) > k:
+            heapq.heappop(self.min_heap)
+
+    def add(self, val):
+        heapq.heappush(self.min_heap, val)
+        if len(self.min_heap) > self.k:
+            heapq.heappop(self.min_heap)
+        return self.min_heap[0]
+```
+
+**Time Complexity:**
+- `__init__`: O(N log N), where N is the length of `nums` (heapify operation).
+- `add`: O(log k) per addition (heap push and pop operations).
+
+**Space Complexity:** O(k) (to store the heap of size k).
+
+
+### 1. **Kth Largest Element in a Stream**
+
+**✅ One-liner:**  
+Maintain a min-heap of size `k` to track the Kth largest element.
+
+**👶 3-liner for kids:**  
+We keep the biggest `k` numbers in a bucket.  
+We throw out the smallest one if we get too many.  
+The Kth largest is always the smallest in our bucket.
+
+**🧠 Mnemonics:**
+- "Push to heap" → `heapq.heappush(self.heap, val)`
+- "Pop if oversized" → `if len(self.heap) > k: heapq.heappop(self.heap)`
+- "Return Kth" → `return self.heap[0]`
+
+
+---
+
+### 2. **Last Stone Weight**
+
+**Problem:**  
+Simulate a process where the two heaviest stones are smashed together until only one or zero stones remain.
+
+**Solution:**
+```python
+import heapq
+
+def lastStoneWeight(stones):
+    stones = [-s for s in stones]
+    heapq.heapify(stones)
+    while len(stones) > 1:
+        first = -heapq.heappop(stones)
+        second = -heapq.heappop(stones)
+        if first != second:
+            heapq.heappush(stones, -(first - second))
+    return -stones[0] if stones else 0
+```
+
+**Time Complexity:** O(N log N), where N is the number of stones (heap operations for each stone).
+
+**Space Complexity:** O(N) (to store the heap).
+
+
+### 2. **Last Stone Weight**
+
+**✅ One-liner:**  
+Use a max-heap (invert numbers) to always smash the heaviest stones.
+
+**👶 3-liner for kids:**  
+We take the two heaviest stones.  
+If they’re different, we smash and put the leftover back.  
+We keep doing that until one or zero stones are left.
+
+**🧠 Mnemonics:**
+- "Max heap" → `heap = [-x for x in stones]`
+- "Pop two largest" → `a = -heapq.heappop(heap), b = -heapq.heappop(heap)`
+- "Push back if diff" → `if a != b: heapq.heappush(heap, -(a - b))`
+
+---
+
+### 3. **K Closest Points to Origin**
+
+**Problem:**  
+Find the k closest points to the origin (0, 0) from a list of points.
+
+**Solution:**
+```python
+import heapq
+
+def kClosest(points, k):
+    heap = []
+    for (x, y) in points:
+        dist = -(x**2 + y**2)
+        if len(heap) < k:
+            heapq.heappush(heap, (dist, x, y))
+        else:
+            heapq.heappushpop(heap, (dist, x, y))
+    return [(x, y) for (dist, x, y) in heap]
+```
+
+**Time Complexity:** O(N log k), where N is the number of points (heap operations for each point).
+
+**Space Complexity:** O(k) (to store the heap of size k).
+
+### 3. **K Closest Points to Origin**
+
+**✅ One-liner:**  
+Use a max-heap of size `k` with negative distances.
+
+**👶 3-liner for kids:**  
+We find how far each point is from the center.  
+We keep only the closest `k` ones.  
+At the end, we give back those points.
+
+**🧠 Mnemonics:**
+- "Calculate dist" → `dist = x*x + y*y`
+- "Max heap trick" → `heapq.heappush(heap, (-dist, (x, y)))`
+- "Pop if > k" → `if len(heap) > k: heapq.heappop(heap)`
+
+---
+
+### 4. **Kth Largest Element in an Array**
+
+**Problem:**  
+Find the kth largest element in an unsorted array.
+
+**Solution:**
+```python
+import heapq
+
+def findKthLargest(nums, k):
+    return heapq.nlargest(k, nums)[-1]
+```
+
+**Time Complexity:** O(N log k), where N is the number of elements in `nums` (heap operations for each element).
+
+**Space Complexity:** O(k) (to store the heap of size k).
+
+### 4. **Kth Largest Element in an Array**
+
+**✅ One-liner:**  
+Use a min-heap of size `k` to track top elements.
+
+**👶 3-liner for kids:**  
+We look through all the numbers.  
+We keep a bucket with the largest `k` ones.  
+The smallest in that bucket is the answer.
+
+**🧠 Mnemonics:**
+- "Push to heap" → `heapq.heappush(heap, num)`
+- "Trim to k size" → `if len(heap) > k: heapq.heappop(heap)`
+- "Return top" → `return heap[0]`
+
+---
+
+### 5. **Task Scheduler**
+
+**Problem:**  
+Given a list of tasks with cooldown intervals, find the minimum time required to execute all tasks.
+
+**Solution:**
+```python
+from collections import Counter
+import heapq
+
+def leastInterval(tasks, n):
+    task_counts = Counter(tasks)
+    max_heap = [-cnt for cnt in task_counts.values()]
+    heapq.heapify(max_heap)
+    time = 0
+    while max_heap:
+        temp = []
+        for _ in range(n + 1):
+            if max_heap:
+                temp.append(heapq.heappop(max_heap))
+        for item in temp:
+            if item + 1 < 0:
+                heapq.heappush(max_heap, item + 1)
+        time += n + 1 if max_heap else len(temp)
+    return time
+```
+
+**Time Complexity:** O(N), where N is the number of tasks.
+
+**Space Complexity:** O(1) (since the task frequency array has at most 26 elements).
+
+
+
+### 5. **Task Scheduler**
+
+**✅ One-liner:**  
+Use a greedy strategy with a max-heap and cooldown logic.
+
+**👶 3-liner for kids:**  
+We want to do tasks without repeating too soon.  
+We do the most frequent task first.  
+If we wait, we fill gaps with idle time.
+
+**🧠 Mnemonics:**
+- "Count tasks" → `freq = Counter(tasks)`
+- "Max heap" → `heap = [-cnt for cnt in freq.values()]`
+- "Cooldown cycle" → `for i in range(n + 1): fill tasks or idle`
+
+
+---
+
+### 6. **Design Twitter**
+
+**Problem:**  
+Design a simplified version of Twitter with basic functionalities.
+
+**Solution:**
+```python
+import heapq
+from collections import defaultdict, deque
+
+class Twitter:
+    def __init__(self):
+        self.time = 0
+        self.tweets = defaultdict(deque)
+        self.followees = defaultdict(set)
+
+    def postTweet(self, userId, tweetId):
+        self.tweets[userId].appendleft((self.time, tweetId))
+        self.time += 1
+
+    def getNewsFeed(self, userId):
+        heap = []
+        self.followees[userId].add(userId)
+        for followee in self.followees[userId]:
+            for tweet in self.tweets[followee]:
+                heapq.heappush(heap, tweet)
+                if len(heap) > 10:
+                    heapq.heappop(heap)
+        result = []
+        while heap:
+            result.append(heapq.heappop(heap)[1])
+        return result[::-1]
+
+    def follow(self, followerId, followeeId):
+        self.followees[followerId].add(followeeId)
+
+    def unfollow(self, followerId, followeeId):
+        self.followees[followerId].discard(followeeId)
+```
+
+**Time Complexity:**
+- `postTweet`: O(1)
+- `getNewsFeed`: O(F + T log T), where F is the number of followees and T is the total number of tweets.
+- `follow`/`unfollow`: O(1)
+
+**Space Complexity:** O(U + T), where U is the number of users and T is the total number of tweets.
+
+### 6. **Design Twitter**
+
+**✅ One-liner:**  
+Use a heap to get the 10 most recent tweets across users.
+
+**👶 3-liner for kids:**  
+Each user has their own tweet list.  
+We mix them and keep only the latest 10.  
+We also track who follows whom.
+
+**🧠 Mnemonics:**
+- "Tweet store" → `self.tweets = {user: []}`
+- "Heap feed" → `heapq.heappush(heap, (-time, tweet))`
+- "Follows set" → `self.followees[user].add(followee)`
+
+
+---
+
+### 7. **Find Median from Data Stream**
+
+**Problem:**  
+Continuously find the median from a stream of numbers.
+
+**Solution:**
+```python
+import heapq
+
+class MedianFinder:
+    def __init__(self):
+        self.small = []  # Max heap (inverted min heap)
+        self.large = []  # Min heap
+
+    def addNum(self, num):
+        heapq.heappush(self.small, -num)
+        if (self.small and self.large and
+                (-self.small[0] > self.large[0])):
+            heapq.heappush(self.large, -heapq.heappop(self.small))
+        if len(self.small) > len(self.large) + 1:
+            heapq.heappush(self.large, -heapq.heappop(self.small))
+        if len(self.large) > len(self.small):
+            heapq.heappush(self.small, -heapq.heappop(self.large))
+
+    def findMedian(self):
+        if len(self.small) > len(self.large):
+            return -self.small[0]
+        return (-self.small[0] + self.large[0]) / 2
+```
+
+**Time Complexity:**
+- `addNum`: O(log N), where N is the number of elements added.
+- `findMedian`: O(1)
+
+**Space Complexity:** O(N) (to store 
+### 7. **Find Median From Data Stream**
+
+**✅ One-liner:**  
+Use two heaps (max-heap + min-heap) to balance lower and upper halves.
+
+**👶 3-liner for kids:**  
+We keep small numbers on one side, big ones on the other.  
+The middle is easy to find when both sides are balanced.  
+We add numbers and move between sides as needed.
+
+**🧠 Mnemonics:**
+- "Two heaps" → `small = MaxHeap`, `large = MinHeap`
+- "Balance heaps" → `if len(small) > len(large): move one over`
+- "Get median" → `return (top of small + top of large) / 2`
