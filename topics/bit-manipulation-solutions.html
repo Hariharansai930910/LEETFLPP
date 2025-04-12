@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 24.8.4.2 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="00:00:00"/>
+	<style type="text/css">
+		@page { size: 8.27in 11.69in; margin: 0.79in }
+		p { line-height: 115%; margin-bottom: 0.1in; background: transparent }
+		pre { font-family: "Liberation Mono", monospace; font-size: 10pt; background: transparent }
+	</style>
+</head>
+<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><pre># 1. Single Number (Easy)
+def singleNumber(nums):
+    &quot;&quot;&quot;
+    Find the single number that appears only once in an array where all other numbers appear twice.
+    
+    Args:
+        nums: List of integers
+        
+    Returns:
+        The single number
+    
+    Time Complexity: O(n) where n is the length of the array
+    Space Complexity: O(1) - constant extra space
+    &quot;&quot;&quot;
+    result = 0
+    for num in nums:
+        # XOR operation: a ^ a = 0 and a ^ 0 = a
+        # So all pairs will cancel out, leaving only the single number
+        result ^= num
+    return result
+
+1. Single Number
+✅ One-liner:
+Use XOR to cancel out all duplicate numbers, leaving the single one.
+
+👶 3-liner for kids:
+Every number appears twice except one.
+Matching numbers cancel each other out.
+Only the lonely one stays!
+
+🧠 Mnemonics:
+
+&quot;Cancel duplicates&quot; → result ^= num
+&quot;Start with zero&quot; → result = 0
+&quot;Return the lone survivor&quot; → return result
+
+# 2. Number of 1 Bits (Easy)
+def hammingWeight(n):
+    &quot;&quot;&quot;
+    Count the number of '1' bits in an unsigned integer.
+    
+    Args:
+        n: An unsigned integer
+        
+    Returns:
+        The number of '1' bits
+    
+    Time Complexity: O(log n) - specifically O(number of bits in n)
+    Space Complexity: O(1) - constant extra space
+    &quot;&quot;&quot;
+    count = 0
+    while n:
+        # n &amp; (n-1) removes the rightmost 1 bit
+        n &amp;= (n - 1)
+        count += 1
+    return count
+
+# Alternative approach using bit manipulation
+def hammingWeight_alt(n):
+    &quot;&quot;&quot;
+    Alternative approach using bit shifting.
+    &quot;&quot;&quot;
+    count = 0
+    while n:
+        count += n &amp; 1  # Check if the least significant bit is 1
+        n &gt;&gt;= 1  # Right shift by 1
+    return count
+
+2. Number of 1 Bits
+✅ One-liner:
+Use n &amp; (n - 1) to clear the rightmost 1 until n becomes 0.
+
+👶 3-liner for kids:
+Look at a number's binary.
+Every time you chop off a 1, count it.
+Keep chopping till there are none!
+
+🧠 Mnemonics:
+
+&quot;Chop rightmost 1&quot; → n &amp;= (n - 1)
+&quot;Count each chop&quot; → count += 1
+&quot;Loop until empty&quot; → while n:
+
+
+
+
+# 3. Counting Bits (Easy)
+def countBits(n):
+    &quot;&quot;&quot;
+    Count the number of '1' bits in each number from 0 to n.
+    
+    Args:
+        n: An integer
+        
+    Returns:
+        List where result[i] is the count of '1' bits in i
+    
+    Time Complexity: O(n)
+    Space Complexity: O(n) for the output array
+    &quot;&quot;&quot;
+    # Initialize result array with 0 for the first element
+    result = [0] * (n + 1)
+    
+    for i in range(1, n + 1):
+        # For any number i, result[i] = result[i &gt;&gt; 1] + (i &amp; 1)
+        # This works because i &gt;&gt; 1 is i / 2, and i &amp; 1 is the last bit
+        result[i] = result[i &gt;&gt; 1] + (i &amp; 1)
+    
+    return result
+
+# Alternative approach using dynamic programming with bit manipulation
+def countBits_alt(n):
+    &quot;&quot;&quot;
+    Alternative approach using i &amp; (i-1).
+    &quot;&quot;&quot;
+    result = [0] * (n + 1)
+    
+    for i in range(1, n + 1):
+        # i &amp; (i-1) removes the rightmost 1 bit
+        # So result[i] = result[i &amp; (i-1)] + 1
+        result[i] = result[i &amp; (i - 1)] + 1
+    
+    return result
+
+3. Counting Bits
+✅ One-liner:
+Build up the 1-bit count using previous results and last bit.
+
+👶 3-liner for kids:
+Every number is made from smaller ones.
+Copy their 1-count and add the last bit.
+Store the count and keep going!
+
+🧠 Mnemonics:
+
+&quot;Right shift reuse&quot; → result[i &gt;&gt; 1] + (i &amp; 1)
+&quot;Start from zero&quot; → result = [0] * (n + 1)
+&quot;Build bottom-up&quot; → for i in range(1, n + 1):
+
+# 4. Reverse Bits (Easy)
+def reverseBits(n):
+    &quot;&quot;&quot;
+    Reverse the bits of a 32-bit unsigned integer.
+    
+    Args:
+        n: A 32-bit unsigned integer
+        
+    Returns:
+        The integer with reversed bits
+    
+    Time Complexity: O(1) - fixed number of operations for 32 bits
+    Space Complexity: O(1) - constant extra space
+    &quot;&quot;&quot;
+    result = 0
+    for i in range(32):
+        # Left shift result by 1 to make space for the next bit
+        result &lt;&lt;= 1
+        # Add the least significant bit of n to result
+        result |= (n &amp; 1)
+        # Right shift n by 1 to process the next bit
+        n &gt;&gt;= 1
+    
+    # Python represents numbers with arbitrary precision, so we need to mask to 32 bits
+    return result
+
+# Optimized approach with bit manipulation tricks
+def reverseBits_optimized(n):
+    &quot;&quot;&quot;
+    Optimized approach using divide-and-conquer.
+    &quot;&quot;&quot;
+    # Swap consecutive pairs of bits
+    n = ((n &amp; 0xAAAAAAAA) &gt;&gt; 1) | ((n &amp; 0x55555555) &lt;&lt; 1)
+    # Swap consecutive pairs of 2 bits
+    n = ((n &amp; 0xCCCCCCCC) &gt;&gt; 2) | ((n &amp; 0x33333333) &lt;&lt; 2)
+    # Swap consecutive pairs of 4 bits
+    n = ((n &amp; 0xF0F0F0F0) &gt;&gt; 4) | ((n &amp; 0x0F0F0F0F) &lt;&lt; 4)
+    # Swap consecutive pairs of 8 bits
+    n = ((n &amp; 0xFF00FF00) &gt;&gt; 8) | ((n &amp; 0x00FF00FF) &lt;&lt; 8)
+    # Swap consecutive pairs of 16 bits
+    n = ((n &amp; 0xFFFF0000) &gt;&gt; 16) | ((n &amp; 0x0000FFFF) &lt;&lt; 16)
+    
+    return n
+
+4. Reverse Bits
+✅ One-liner:
+Shift and build the reversed number bit-by-bit.
+
+👶 3-liner for kids:
+Read one bit at a time from right to left.
+Put it in the new number from left to right.
+Do this 32 times!
+
+🧠 Mnemonics:
+
+&quot;Shift left &amp; add&quot; → result = (result &lt;&lt; 1) | (n &amp; 1)
+&quot;Shift n right&quot; → n &gt;&gt;= 1
+&quot;Do it 32 times&quot; → for i in range(32):
+
+
+# 5. Missing Number (Easy)
+def missingNumber(nums):
+    &quot;&quot;&quot;
+    Find the missing number in a sequence of 0 to n.
+    
+    Args:
+        nums: List of n distinct numbers in the range [0, n]
+        
+    Returns:
+        The missing number
+    
+    Time Complexity: O(n) where n is the length of the array
+    Space Complexity: O(1) - constant extra space
+    &quot;&quot;&quot;
+    n = len(nums)
+    # XOR all numbers from 0 to n with all numbers in the array
+    # The missing number will be the result
+    result = n  # Start with n as it's not in the range of indices
+    
+    for i in range(n):
+        # XOR result with both the index and the value at that index
+        result ^= i ^ nums[i]
+    
+    return result
+
+# Alternative approach using sum formula
+def missingNumber_sum(nums):
+    &quot;&quot;&quot;
+    Alternative approach using the sum formula.
+    &quot;&quot;&quot;
+    n = len(nums)
+    # The sum of numbers from 0 to n is n*(n+1)/2
+    expected_sum = n * (n + 1) // 2
+    actual_sum = sum(nums)
+    
+    return expected_sum - actual_sum
+
+5. Missing Number
+✅ One-liner:
+Use XOR to cancel out all matching numbers and find the missing one.
+
+👶 3-liner for kids:
+You have numbers from 0 to n.
+One number is missing.
+Use XOR to cancel all and see what's left!
+
+🧠 Mnemonics:
+
+&quot;Init with n&quot; → result = n
+&quot;XOR indices &amp; values&quot; → result ^= i ^ nums[i]
+&quot;Missing one remains&quot; → return result
+
+
+
+# 6. Sum of Two Integers (Medium)
+def getSum(a, b):
+    &quot;&quot;&quot;
+    Calculate the sum of two integers without using + or - operators.
+    
+    Args:
+        a, b: Two integers
+        
+    Returns:
+        The sum of a and b
+    
+    Time Complexity: O(log max(a, b)) - number of bits needed
+    Space Complexity: O(1) - constant extra space
+    &quot;&quot;&quot;
+    # 32-bit mask in hexadecimal (2^32 - 1)
+    mask = 0xFFFFFFFF
+    
+    # Ensure a and b are within 32-bit range
+    a &amp;= mask
+    b &amp;= mask
+    
+    while b:
+        # Carry is AND of a and b
+        carry = a &amp; b
+        
+        # Sum without carry is XOR of a and b
+        a = (a ^ b) &amp; mask
+        
+        # Shift carry by 1 (using left shift)
+        b = (carry &lt;&lt; 1) &amp; mask
+    
+    # Handle negative numbers in Python (convert back from 32-bit representation)
+    if a &gt; 0x7FFFFFFF:  # If the sign bit is set (negative)
+        return ~(a ^ mask)
+    
+    return a
+
+6. Sum of Two Integers
+✅ One-liner:
+Use XOR for addition and AND + shift for carry.
+
+👶 3-liner for kids:
+To add, XOR is the fun part.
+AND gives carry – shift it next.
+Repeat until carry is gone!
+
+🧠 Mnemonics:
+
+&quot;Sum without carry&quot; → a = (a ^ b) &amp; mask
+&quot;Get carry&quot; → carry = (a &amp; b) &lt;&lt; 1
+&quot;Final check for sign&quot; → if a &gt; 0x7FFFFFFF: return ~(a ^ mask)
+
+
+
+# 7. Reverse Integer (Easy)
+def reverse(x):
+    &quot;&quot;&quot;
+    Reverse the digits of a signed 32-bit integer.
+    
+    Args:
+        x: A signed 32-bit integer
+        
+    Returns:
+        The integer with reversed digits, or 0 if overflow
+    
+    Time Complexity: O(log x) - number of digits in x
+    Space Complexity: O(1) - constant extra space
+    &quot;&quot;&quot;
+    # Handle negative numbers
+    sign = -1 if x &lt; 0 else 1
+    x = abs(x)
+    
+    # Reverse the digits
+    reversed_x = 0
+    while x:
+        # Extract the last digit
+        digit = x % 10
+        # Remove the last digit
+        x //= 10
+        
+        # Check for integer overflow
+        if reversed_x &gt; (2**31 - 1) // 10 or (reversed_x == (2**31 - 1) // 10 and digit &gt; 7):
+            return 0
+        
+        # Append the digit to the reversed number
+        reversed_x = reversed_x * 10 + digit
+    
+    return sign * reversed_x
+
+# Alternative approach using string conversion
+def reverse_string(x):
+    &quot;&quot;&quot;
+    Alternative approach using string conversion.
+    &quot;&quot;&quot;
+    # Handle negative numbers
+    sign = -1 if x &lt; 0 else 1
+    x = abs(x)
+    
+    # Convert to string, reverse, and convert back to integer
+    reversed_str = str(x)[::-1]
+    reversed_x = int(reversed_str)
+    
+    # Check for integer overflow
+    if reversed_x &gt; 2**31 - 1:
+        return 0
+    
+    return sign * reversed_x
+
+7. Reverse Integer
+✅ One-liner:
+Extract digits one by one, check for overflow, and reverse.
+
+👶 3-liner for kids:
+Take digits from the end and build backward.
+Make sure it doesn't overflow.
+Put the sign back at the end.
+
+🧠 Mnemonics:
+
+&quot;Extract digit&quot; → digit = x % 10
+&quot;Append reversed&quot; → reversed_x = reversed_x * 10 + digit
+&quot;Check overflow&quot; → if reversed_x &gt; (2**31 - 1) // 10: return 0
+
+</pre>
+</body>
+</html>

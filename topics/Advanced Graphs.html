@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 24.8.4.2 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="00:00:00"/>
+	<style type="text/css">
+		@page { size: 8.27in 11.69in; margin: 0.79in }
+		p { line-height: 115%; margin-bottom: 0.1in; background: transparent }
+		pre { font-family: "Liberation Mono", monospace; font-size: 10pt; background: transparent }
+	</style>
+</head>
+<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><pre>class Solution:
+    def networkDelayTime(self, times: List[List[int]], n: int, k: int) -&gt; int:
+        edges = collections.defaultdict(list)
+        for u, v, w in times:
+            edges[u].append((v, w))
+
+        minHeap = [(0, k)]
+        visit = set()
+        t = 0
+        while minHeap:
+            w1, n1 = heapq.heappop(minHeap)
+            if n1 in visit:
+                continue
+            visit.add(n1)
+            t = w1
+
+            for n2, w2 in edges[n1]:
+                if n2 not in visit:
+                    heapq.heappush(minHeap, (w1 + w2, n2))
+        return t if len(visit) == n else -1
+
+1. Network Delay Time
+✅ One-liner:
+Use Dijkstra’s algorithm to find shortest time to all nodes.
+
+👶 3-liner:
+We send a signal from one point.
+We figure out how fast it can reach every other point.
+The longest of those times is our answer.
+
+🧠 Mnemonics:
+
+&quot;Build graph&quot; → graph[u].append((v, w))
+
+&quot;Min-heap Dijkstra&quot; → heappop(heap) gives node with smallest time
+
+&quot;Update time&quot; → if new_time &lt; dist[v]: update and push
+
+class Solution:
+    def findItinerary(self, tickets: List[List[str]]) -&gt; List[str]:
+        adj = defaultdict(list)
+        for src, dst in sorted(tickets)[::-1]:
+            adj[src].append(dst)
+            
+        stack = [&quot;JFK&quot;]
+        res = []
+        
+        while stack:
+            curr = stack[-1]
+            if not adj[curr]:
+                res.append(stack.pop())
+            else:
+                stack.append(adj[curr].pop())
+                
+        return res[::-1]
+
+2. Reconstruct Itinerary
+✅ One-liner:
+Use DFS + min-heap to build lexicographically smallest itinerary.
+
+👶 3-liner:
+We treat each airport as a point.
+We travel using the smallest possible word (alphabetically).
+When all tickets are used, that’s our path.
+
+🧠 Mnemonics:
+
+&quot;Build min-heap graph&quot; → graph[frm].append(to); heapify
+
+&quot;DFS visit&quot; → while graph[airport]: dfs(next_dest)
+
+&quot;Build itinerary&quot; → res.appendleft(airport)
+
+
+
+class Solution:
+    def minCostConnectPoints(self, points: List[List[int]]) -&gt; int:
+        n, node = len(points), 0
+        dist = [100000000] * n
+        visit = [False] * n
+        edges, res = 0, 0
+
+        while edges &lt; n - 1:
+            visit[node] = True
+            nextNode = -1
+            for i in range(n):
+                if visit[i]:
+                    continue
+                curDist = (abs(points[i][0] - points[node][0]) + 
+                           abs(points[i][1] - points[node][1]))
+                dist[i] = min(dist[i], curDist)
+                if nextNode == -1 or dist[i] &lt; dist[nextNode]:
+                    nextNode = i
+                    
+            res += dist[nextNode]
+            node = nextNode
+            edges += 1
+
+        return res
+
+3. Min Cost to Connect All Points
+✅ One-liner:
+Use Prim’s algorithm (MST) with min-heap for Manhattan distances.
+
+👶 3-liner:
+We connect all dots with the least total cost.
+We always choose the shortest connection that’s not yet used.
+When all points are connected, we stop.
+
+🧠 Mnemonics:
+
+&quot;Heap init&quot; → heap = [(0, 0)] (cost, node)
+
+&quot;Track visited&quot; → if node not in visited: add to cost
+
+&quot;Push neighbors&quot; → for every next_point: heappush with distance
+
+class Solution:
+    def swimInWater(self, grid: List[List[int]]) -&gt; int:
+        N = len(grid)
+        visit = set()
+        minH = [[grid[0][0], 0, 0]]  # (time/max-height, r, c)
+        directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]
+
+        visit.add((0, 0))
+        while minH:
+            t, r, c = heapq.heappop(minH)
+            if r == N - 1 and c == N - 1:
+                return t
+            for dr, dc in directions:
+                neiR, neiC = r + dr, c + dc
+                if (neiR &lt; 0 or neiC &lt; 0 or 
+                    neiR == N or neiC == N or
+                    (neiR, neiC) in visit
+                ):
+                    continue
+                visit.add((neiR, neiC))
+                heapq.heappush(minH, [max(t, grid[neiR][neiC]), neiR, neiC])
+
+
+4. Swim in Rising Water
+✅ One-liner:
+Use Dijkstra-style BFS to always swim in the minimum rising level.
+
+👶 3-liner:
+We treat the grid like a pool filling up.
+We can only move to spots that are less than or equal to the current water level.
+We find the smallest max value along the path to the bottom.
+
+🧠 Mnemonics:
+
+&quot;Heap by elevation&quot; → heappush(heap, (elevation, r, c))
+
+&quot;Track max&quot; → max_time = max(max_time, grid[r][c])
+
+&quot;Stop at end&quot; → if r == n-1 and c == n-1: return max_time
+
+
+class Solution:
+    def foreignDictionary(self, words):
+        adj = {c: set() for w in words for c in w}
+        indegree = {c: 0 for c in adj}
+        
+        for i in range(len(words) - 1):
+            w1, w2 = words[i], words[i + 1]
+            minLen = min(len(w1), len(w2))
+            if len(w1) &gt; len(w2) and w1[:minLen] == w2[:minLen]:
+                return &quot;&quot;
+            for j in range(minLen):
+                if w1[j] != w2[j]:
+                    if w2[j] not in adj[w1[j]]:
+                        adj[w1[j]].add(w2[j])
+                        indegree[w2[j]] += 1
+                    break
+        
+        q = deque([c for c in indegree if indegree[c] == 0])
+        res = []
+        
+        while q:
+            char = q.popleft()
+            res.append(char)
+            for neighbor in adj[char]:
+                indegree[neighbor] -= 1
+                if indegree[neighbor] == 0:
+                    q.append(neighbor)
+        
+        if len(res) != len(indegree):
+            return &quot;&quot;
+        
+        return &quot;&quot;.join(res)
+
+
+5. Alien Dictionary
+✅ One-liner:
+Build graph from character order and use topological sort (BFS).
+
+👶 3-liner:
+We look at word pairs to learn which letter comes first.
+We build a graph of rules from those pairs.
+Then we sort the letters based on what comes before what.
+
+🧠 Mnemonics:
+
+&quot;Build graph&quot; → if a != b: graph[a].append(b); indegree[b] += 1
+
+&quot;Start with 0 indegree&quot; → queue = letters with indegree 0
+
+&quot;Topo sort&quot; → while queue: pop letter, reduce indegrees
+
+class Solution:
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -&gt; int:
+        prices = [float(&quot;inf&quot;)] * n
+        prices[src] = 0
+        adj = [[] for _ in range(n)]
+        for u, v, cst in flights:
+            adj[u].append([v, cst])
+
+        q = deque([(0, src, 0)])
+        while q:
+            cst, node, stops = q.popleft()
+            if stops &gt; k:
+                continue
+            
+            for nei, w in adj[node]:
+                nextCost = cst + w
+                if nextCost &lt; prices[nei]:
+                    prices[nei] = nextCost
+                    q.append((nextCost, nei, stops + 1))
+
+        return prices[dst] if prices[dst] != float(&quot;inf&quot;) else -1
+
+
+6. Cheapest Flights Within K Stops
+✅ One-liner:
+Use modified BFS (Bellman-Ford style) with (cost, node, stops).
+
+👶 3-liner:
+We look for the cheapest flight path with limited stops.
+We explore each city step by step.
+We avoid paths that are too long or expensive.
+
+🧠 Mnemonics:
+
+&quot;Queue with stops&quot; → heap = [(0, src, 0)]
+
+&quot;If stops ≤ K&quot; → push (cost + price, next, stops + 1)
+
+&quot;Track cheapest&quot; → if city == dst: return cost
+
+
+</pre>
+</body>
+</html>

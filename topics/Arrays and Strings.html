@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 24.8.4.2 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="00:00:00"/>
+	<style type="text/css">
+		@page { size: 8.27in 11.69in; margin: 0.79in }
+		p { line-height: 115%; margin-bottom: 0.1in; background: transparent }
+		pre { font-family: "Liberation Mono", monospace; font-size: 10pt; background: transparent }
+	</style>
+</head>
+<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><pre>Question:1
+Contains Duplicate
+Given an integer array nums, return true if any value appears more than once in the array, otherwise return false.
+
+Example 1:
+Input: nums = [1, 2, 3, 3]
+Output: true
+
+Optimised Solution:
+Method name :HASHSET 
+
+Code:
+class Solution:
+    def hasDuplicate(self, nums: List[int]) -&gt; bool:
+        seen = set()
+        for num in nums:
+            if num in seen:
+                return True
+            seen.add(num)
+        return False
+
+Time &amp; Space Complexity
+Time complexity: 
+O(n)
+Space complexity: 
+O(n)
+1. Contains Duplicate
+✅ One-liner:
+Use a set to check if any element repeats.
+
+👶 3-liner for kids:
+We go through each number.
+We keep a list of ones we’ve already seen.
+If a number shows up again, we know it’s a duplicate.
+
+🧠 Mnemonics:
+
+&quot;Seen before?&quot; → if num in seen: return True
+
+&quot;Add new&quot; → seen.add(num)
+
+&quot;End clean&quot; → return False
+
+-------------------------------------------
+
+Question:2
+Valid Anagram
+Given two strings s and t, return true if the two strings are anagrams of each other, otherwise return false.
+
+An anagram is a string that contains the exact same characters as another string, but the order of the characters can be different.
+
+Example 1:
+
+Input: s = &quot;racecar&quot;, t = &quot;carrace&quot;
+Output: true
+
+Optimised Solution:
+Method name : Hash Table (Optimal) 
+
+Code:
+class Solution:
+    def isAnagram(self, s: str, t: str) -&gt; bool:
+        if len(s) != len(t):
+            return False
+
+        count = [0] * 26
+        for i in range(len(s)):
+            count[ord(s[i]) - ord('a')] += 1
+            count[ord(t[i]) - ord('a')] -= 1
+
+        for val in count:
+            if val != 0:
+                return False
+        return True
+
+Time &amp; Space Complexity
+Time complexity: 
+O(n+m)
+Space complexity: 
+O(1) since we have at most 
+26
+26 different characters.
+
+2. Valid Anagram
+✅ One-liner:
+Use counters (hashmaps) to compare character frequencies.
+
+👶 3-liner for kids:
+We count the letters in both words.
+If every letter shows up the same number of times, it's an anagram.
+Otherwise, it's not.
+
+🧠 Mnemonics:
+
+&quot;Count both&quot; → Counter(s) == Counter(t)
+
+&quot;Compare maps&quot; → for key in counts: compare values
+
+&quot;Return result&quot; → return True/False
+
+------------------------------------------------
+
+Question:3
+Two Sum
+Given an array of integers nums and an integer target, return the indices i and j such that nums[i] + nums[j] == target and i != j.
+
+You may assume that every input has exactly one pair of indices i and j that satisfy the condition.
+
+Return the answer with the smaller index first.
+
+Example 1:
+
+Input: 
+nums = [3,4,5,6], target = 7
+
+Output: [0,1]
+
+
+Optimised Solution:
+Method name: Hash Map (Two Pass)
+Code:
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -&gt; List[int]:
+        indices = {}  # val -&gt; index
+
+        for i, n in enumerate(nums):
+            indices[n] = i
+
+        for i, n in enumerate(nums):
+            diff = target - n
+            if diff in indices and indices[diff] != i:
+                return [i, indices[diff]]
+
+Time &amp; Space Complexity
+Time complexity: 
+O(n)
+Space complexity: 
+O(n)
+3. Two Sum
+✅ One-liner:
+Store each number’s complement in a hashmap as we loop.
+
+👶 3-liner for kids:
+We look for two numbers that add to a target.
+We remember each number we see and what we need to reach the target.
+If we find the right pair, we return their positions.
+
+🧠 Mnemonics:
+
+&quot;Check map&quot; → if target - num in seen: return [i, seen[target - num]]
+
+&quot;Store index&quot; → seen[num] = i
+
+&quot;Loop through&quot; → for i, num in enumerate(nums):
+
+-----------------------
+
+Question:4
+Group Anagrams
+Solved 
+Given an array of strings strs, group all anagrams together into sublists. You may return the output in any order.
+
+An anagram is a string that contains the exact same characters as another string, but the order of the characters can be different.
+
+Example 1:
+
+Input: strs = [&quot;act&quot;,&quot;pots&quot;,&quot;tops&quot;,&quot;cat&quot;,&quot;stop&quot;,&quot;hat&quot;]
+
+Output: [[&quot;hat&quot;],[&quot;act&quot;, &quot;cat&quot;],[&quot;stop&quot;, &quot;pots&quot;, &quot;tops&quot;]]
+
+Optimised Solution:
+Method name: Hash Table
+Code:
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]:
+        res = defaultdict(list)
+        for s in strs:
+            count = [0] * 26
+            for c in s:
+                count[ord(c) - ord('a')] += 1
+            res[tuple(count)].append(s)
+        return list(res.values())
+Time &amp; Space Complexity
+Time complexity: 
+O(m∗n)
+Space complexity: 
+O(m)
+
+4. Group Anagrams
+✅ One-liner:
+Group words using sorted letters as a key in a hashmap.
+
+👶 3-liner for kids:
+We sort the letters in each word.
+Words with the same letters go into the same group.
+We collect all the groups.
+
+🧠 Mnemonics:
+
+&quot;Sort word&quot; → key = ''.join(sorted(word))
+
+&quot;Group by key&quot; → anagram_map[key].append(word)
+
+&quot;Return values&quot; → return anagram_map.values()
+
+-----------------------------------------------------
+
+Question:5
+Top K Frequent Elements
+Given an integer array nums and an integer k, return the k most frequent elements within the array.
+
+The test cases are generated such that the answer is always unique.
+
+You may return the output in any order.
+
+Example 1:
+
+Input: nums = [1,2,2,3,3,3], k = 2
+
+Output: [2,3]
+
+Optimised Solution:
+Method name: Bucket Sort
+
+Code:
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -&gt; List[int]:
+        count = {}
+        freq = [[] for i in range(len(nums) + 1)]
+
+        for num in nums:
+            count[num] = 1 + count.get(num, 0)
+        for num, cnt in count.items():
+            freq[cnt].append(num)
+        
+        res = []
+        for i in range(len(freq) - 1, 0, -1):
+            for num in freq[i]:
+                res.append(num)
+                if len(res) == k:
+                    return res
+Time &amp; Space Complexity
+Time complexity: 
+O(n)
+Space complexity: 
+O(n)
+
+5. Top K Frequent Elements
+✅ One-liner:
+Use a counter and a heap to get the top k items.
+
+👶 3-liner for kids:
+We count how many times each number shows up.
+We keep the k most common ones.
+Then we return them.
+
+🧠 Mnemonics:
+
+&quot;Count frequency&quot; → count = Counter(nums)
+
+&quot;Heap select top&quot; → heapq.nlargest(k, count.keys(), key=count.get)
+
+&quot;Return result&quot; → return result
+-----------------------------------------------------
+
+Question:6
+Encode and Decode Strings
+Design an algorithm to encode a list of strings to a single string. The encoded string is then decoded back to the original list of strings.
+
+Please implement encode and decode
+
+Example 1:
+
+Input: [&quot;neet&quot;,&quot;code&quot;,&quot;love&quot;,&quot;you&quot;]
+
+Output:[&quot;neet&quot;,&quot;code&quot;,&quot;love&quot;,&quot;you&quot;]
+
+Optimised Solution:
+Method name: Encoding &amp; Decoding (Optimal)
+Code:
+class Solution:
+    
+    def encode(self, strs: List[str]) -&gt; str:
+        res = &quot;&quot;
+        for s in strs:
+            res += str(len(s)) + &quot;#&quot; + s
+        return res
+
+    def decode(self, s: str) -&gt; List[str]:
+        res = []
+        i = 0
+        
+        while i &lt; len(s):
+            j = i
+            while s[j] != '#':
+                j += 1
+            length = int(s[i:j])
+            i = j + 1
+            j = i + length
+            res.append(s[i:j])
+            i = j
+            
+        return res
+
+Time &amp; Space Complexity
+Time complexity: 
+O(m) for each encode() and decode() function calls.
+Space complexity: 
+O(m+n) for each encode() and decode() function calls
+
+6. Encode and Decode Strings
+✅ One-liner:
+Use a length prefix or delimiter to encode, then decode safely.
+
+👶 3-liner for kids:
+We turn each word into a number + word combo.
+That way we can separate them later.
+We read the length to split them back correctly.
+
+🧠 Mnemonics:
+
+&quot;Encode with length&quot; → s = str(len(word)) + &quot;#&quot; + word
+
+&quot;Split by count&quot; → length = int(s[:i]), then s[i+1:i+1+length]
+
+&quot;Loop until done&quot; → while i &lt; len(s): decode
+
+----------------------------------------------------------
+
+Question:7
+Products of Array Except Self
+Given an integer array nums, return an array output where output[i] is the product of all the elements of nums except nums[i].
+
+Each product is guaranteed to fit in a 32-bit integer.
+
+Follow-up: Could you solve it in 
+O(n) time without using the division operation?
+
+Example 1:
+
+Input: nums = [1,2,4,6]
+
+Output: [48,24,12,8]
+
+
+Optimised Solution:
+Method name: Prefix &amp; Suffix (Optimal)
+Code:
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -&gt; List[int]:
+        res = [1] * (len(nums))
+
+        prefix = 1
+        for i in range(len(nums)):
+            res[i] = prefix
+            prefix *= nums[i]
+        postfix = 1
+        for i in range(len(nums) - 1, -1, -1):
+            res[i] *= postfix
+            postfix *= nums[i]
+        return res
+Time &amp; Space Complexity
+Time complexity: 
+
+O(n)
+Space complexity: 
+
+O(1) since the output array is excluded from space analysis.
+
+7. Product of Array Except Self
+✅ One-liner:
+Use prefix and suffix multiplications without division.
+
+👶 3-liner for kids:
+We find how much every number would be if we multiply all other numbers.
+First, we go left to right.
+Then, we go right to left and finish the math.
+
+🧠 Mnemonics:
+
+&quot;Left pass&quot; → for i in range(n): res[i] *= prefix
+
+&quot;Right pass&quot; → for i in reversed(range(n)): res[i] *= suffix
+
+&quot;Update prefixes&quot; → prefix *= nums[i], suffix *= nums[i]
+
+------------------------------------------------------------
+Question:8
+Valid Sudoku
+You are given a a 9 x 9 Sudoku board board. A Sudoku board is valid if the following rules are followed:
+
+Each row must contain the digits 1-9 without duplicates.
+Each column must contain the digits 1-9 without duplicates.
+Each of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without duplicates.
+Return true if the Sudoku board is valid, otherwise return false
+
+Note: A board does not need to be full or be solvable to be valid.
+
+Input: board = 
+[[&quot;1&quot;,&quot;2&quot;,&quot;.&quot;,&quot;.&quot;,&quot;3&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;],
+ [&quot;4&quot;,&quot;.&quot;,&quot;.&quot;,&quot;5&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;],
+ [&quot;.&quot;,&quot;9&quot;,&quot;8&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;3&quot;],
+ [&quot;5&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;6&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;4&quot;],
+ [&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;8&quot;,&quot;.&quot;,&quot;3&quot;,&quot;.&quot;,&quot;.&quot;,&quot;5&quot;],
+ [&quot;7&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;2&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;6&quot;],
+ [&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;2&quot;,&quot;.&quot;,&quot;.&quot;],
+ [&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;4&quot;,&quot;1&quot;,&quot;9&quot;,&quot;.&quot;,&quot;.&quot;,&quot;8&quot;],
+ [&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;8&quot;,&quot;.&quot;,&quot;.&quot;,&quot;7&quot;,&quot;9&quot;]]
+
+Output: true
+
+Optimised Solution:
+Method name: Brute Force
+Code:
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -&gt; bool:
+        for row in range(9):
+            seen = set()
+            for i in range(9):
+                if board[row][i] == &quot;.&quot;: 
+                    continue
+                if board[row][i] in seen:
+                    return False
+                seen.add(board[row][i])
+        
+        for col in range(9):
+            seen = set()
+            for i in range(9):
+                if board[i][col] == &quot;.&quot;:
+                    continue
+                if board[i][col] in seen:
+                    return False
+                seen.add(board[i][col])
+            
+        for square in range(9):
+            seen = set()
+            for i in range(3):
+                for j in range(3):
+                    row = (square//3) * 3 + i
+                    col = (square % 3) * 3 + j
+                    if board[row][col] == &quot;.&quot;:
+                        continue
+                    if board[row][col] in seen:
+                        return False
+                    seen.add(board[row][col])
+        return True
+
+Time &amp; Space Complexity
+Time complexity: 
+O(n ^2 )
+Space complexity: 
+O(n ^2 )
+
+8. Valid Sudoku
+✅ One-liner:
+Use sets to check each row, column, and 3x3 box.
+
+👶 3-liner for kids:
+Each row, column, and box must have unique numbers.
+We go through the board and record what we see.
+If anything repeats in the same row, column, or box, it's not valid.
+
+🧠 Mnemonics:
+
+&quot;Check each cell&quot; → for i in range(9): for j in range(9):
+
+&quot;Use 3 keys&quot; → row[i], col[j], box[i//3, j//3]
+
+&quot;Add or return False&quot; → if val in set: return False else: add
+
+------------------------------------------------------------
+Question:9
+Longest Consecutive Sequence
+Given an array of integers nums, return the length of the longest consecutive sequence of elements that can be formed.
+
+A consecutive sequence is a sequence of elements in which each element is exactly 1 greater than the previous element. The elements do not have to be consecutive in the original array.
+
+You must write an algorithm that runs in O(n) time.
+
+Example 1:
+
+Input: nums = [2,20,4,10,3,4,5]
+
+Output: 4
+
+Optimised Solution:
+Method name: Hash SET 
+Code:
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -&gt; int:
+        numSet = set(nums)
+        longest = 0
+
+        for num in numSet:
+            if (num - 1) not in numSet:
+                length = 1
+                while (num + length) in numSet:
+                    length += 1
+                longest = max(length, longest)
+        return longest
+Time &amp; Space Complexity
+Time complexity: 
+O(n)
+Space complexity: 
+O(n)
+
+### 9. **Longest Consecutive Sequence**
+
+**✅ One-liner:**  
+Use a set and expand sequences from the smallest number.
+
+**👶 3-liner for kids:**  
+We put all the numbers in a quick lookup set.  
+Then we start from numbers that are the beginning of a sequence.  
+We count how long each chain goes.
+
+**🧠 Mnemonics:**
+- &quot;Add to set&quot; → `num_set = set(nums)`
+- &quot;Start from beginning&quot; → `if num - 1 not in num_set:`
+- &quot;Expand right&quot; → `while num + streak in num_set: streak += 1`
+
+---
+</pre>
+</body>
+</html>

@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="utf-8" />
+		<title>
+		</title>
+		<style>
+			body { font-family:'Times New Roman'; font-size:12pt }
+			p { margin:0pt }
+@media (max-width: 900px) { 
+img { 
+   max-width: 100%;
+   height: auto;
+}
+
+.table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td, th {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+}	
+
+
+		</style>
+	</head>
+	<body>
+			<p>
+				Certainly! Here are optimized Python solutions for each problem, along with their time and space complexities:
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				---
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				### 1. **Climbing Stairs**
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Problem:**&#xa0; 
+			</p>
+			<p>
+				Given `n` steps, you can climb 1 or 2 steps at a time. Find the number of distinct ways to reach the top.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Solution:**
+			</p>
+			<p>
+				```python
+			</p>
+			<p>
+				def climbStairs(n):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; if n &lt;= 2:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return n
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; first, second = 1, 2
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; for _ in range(3, n + 1):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; first, second = second, first + second
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; return second
+			</p>
+			<p>
+				```
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Time Complexity:** O(n) – We iterate up to `n`.&#xa0; 
+			</p>
+			<p>
+				**Space Complexity:** O(1) – Constant space used.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				1. Climbing Stairs
+			</p>
+			<p>
+				✅ One-liner:
+			</p>
+			<p>
+				Use Fibonacci-style bottom-up DP to count steps.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				👶 3-liner for kids:
+			</p>
+			<p>
+				You can climb 1 or 2 stairs at a time.
+			</p>
+			<p>
+				Count how many ways to get to each stair.
+			</p>
+			<p>
+				It’s like adding ways from two previous steps.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				🧠 Mnemonics:
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				"Fibonacci step" → first, second = second, first + second
+			</p>
+			<p>
+				"Start base" → first, second = 1, 2
+			</p>
+			<p>
+				"Return top" → return second
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				---
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				### 2. **Min Cost Climbing Stairs**
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Problem:**&#xa0; 
+			</p>
+			<p>
+				Given an array `cost` where `cost[i]` is the cost of the `i`-th step, find the minimum cost to reach the top.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Solution:**
+			</p>
+			<p>
+				```python
+			</p>
+			<p>
+				def minCostClimbingStairs(cost):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; n = len(cost)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; first, second = cost[0], cost[1]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; for i in range(2, n):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; first, second = second, cost[i] + min(first, second)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; return min(first, second)
+			</p>
+			<p>
+				```
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Time Complexity:** O(n) – We iterate through the `cost` array once.&#xa0; 
+			</p>
+			<p>
+				**Space Complexity:** O(1) – Constant space used.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				2. Min Cost Climbing Stairs
+			</p>
+			<p>
+				✅ One-liner:
+			</p>
+			<p>
+				Track min cost to reach each stair by choosing the cheaper path.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				👶 3-liner for kids:
+			</p>
+			<p>
+				Every stair has a price.
+			</p>
+			<p>
+				You can jump one or two ahead.
+			</p>
+			<p>
+				Always pay the cheaper way!
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				🧠 Mnemonics:
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				"Take cheaper path" → first, second = second, cost[i] + min(first, second)
+			</p>
+			<p>
+				"Start base" → first, second = cost[0], cost[1]
+			</p>
+			<p>
+				"Choose last" → return min(first, second)
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				---
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				### 3. **House Robber**
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Problem:**&#xa0; 
+			</p>
+			<p>
+				Given an array `nums` representing the amount of money in each house, find the maximum amount you can rob without robbing adjacent houses.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Solution:**
+			</p>
+			<p>
+				```python
+			</p>
+			<p>
+				def rob(nums):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; if not nums:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return 0
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; if len(nums) == 1:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return nums[0]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; first, second = 0, 0
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; for num in nums:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; first, second = second, max(second, first + num)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; return second
+			</p>
+			<p>
+				```
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Time Complexity:** O(n) – We iterate through the `nums` array once.&#xa0; 
+			</p>
+			<p>
+				**Space Complexity:** O(1) – Constant space used.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				3. House Robber
+			</p>
+			<p>
+				✅ One-liner:
+			</p>
+			<p>
+				Use DP to choose max between robbing current or skipping it.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				👶 3-liner for kids:
+			</p>
+			<p>
+				Can’t rob two houses in a row.
+			</p>
+			<p>
+				Each time, choose: rob this or skip it.
+			</p>
+			<p>
+				Keep track of best steal.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				🧠 Mnemonics:
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				"Rob or skip" → first, second = second, max(second, first + num)
+			</p>
+			<p>
+				"Track rolling max" → first, second = 0, 0
+			</p>
+			<p>
+				"Final loot" → return second
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				---
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				### 4. **House Robber II**
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Problem:**&#xa0; 
+			</p>
+			<p>
+				Similar to House Robber, but houses are arranged in a circle. Find the maximum amount you can rob without alerting the police.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Solution:**
+			</p>
+			<p>
+				```python
+			</p>
+			<p>
+				def rob(nums):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; def rob_linear(houses):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; first, second = 0, 0
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for num in houses:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; first, second = second, max(second, first + num)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return second
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; if len(nums) == 1:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return nums[0]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; return max(rob_linear(nums[:-1]), rob_linear(nums[1:]))
+			</p>
+			<p>
+				```
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Time Complexity:** O(n) – We process two linear passes of the houses.&#xa0; 
+			</p>
+			<p>
+				**Space Complexity:** O(1) – Constant space used.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				4. House Robber II
+			</p>
+			<p>
+				✅ One-liner:
+			</p>
+			<p>
+				Run house robber on both circle-split paths and return the best.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				👶 3-liner for kids:
+			</p>
+			<p>
+				First and last houses are neighbors.
+			</p>
+			<p>
+				So rob from 0 to n-2 or from 1 to n-1.
+			</p>
+			<p>
+				Take the better of the two!
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				🧠 Mnemonics:
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				"Rob linearly" → rob_linear(nums[:-1]), rob_linear(nums[1:])
+			</p>
+			<p>
+				"Rolling max again" → first, second = second, max(second, first + num)
+			</p>
+			<p>
+				"Return max plan" → return max(...)
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				---
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				### 5. **Longest Palindromic Substring**
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Problem:**&#xa0; 
+			</p>
+			<p>
+				Given a string `s`, find the longest palindromic substring in `s`.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Solution:**
+			</p>
+			<p>
+				```python
+			</p>
+			<p>
+				def longestPalindrome(s):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; def expand_around_center(left, right):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; while left &gt;= 0 and right &lt; len(s) and s[left] == s[right]:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; left -= 1
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; right += 1
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return s[left + 1:right]
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; longest = ""
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; for i in range(len(s)):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; # Odd length palindrome
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; temp = expand_around_center(i, i)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; if len(temp) &gt; len(longest):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; longest = temp
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; # Even length palindrome
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; temp = expand_around_center(i, i + 1)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; if len(temp) &gt; len(longest):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; longest = temp
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; return longest
+			</p>
+			<p>
+				```
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Time Complexity:** O(n²) – For each character, we potentially expand to the entire string.&#xa0; 
+			</p>
+			<p>
+				**Space Complexity:** O(1) – No extra space used beyond variables.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				5. Longest Palindromic Substring
+			</p>
+			<p>
+				✅ One-liner:
+			</p>
+			<p>
+				Expand around each center to find longest mirror substring.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				👶 3-liner for kids:
+			</p>
+			<p>
+				A palindrome reads the same both ways.
+			</p>
+			<p>
+				Try expanding around every letter.
+			</p>
+			<p>
+				Keep the longest one you find!
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				🧠 Mnemonics:
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				"Expand center" → while s[left] == s[right]: left--, right++
+			</p>
+			<p>
+				"Two tries" → expand(i, i), expand(i, i+1)
+			</p>
+			<p>
+				"Track longest" → if len(temp) &gt; len(longest): longest = temp
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				---
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				### 6. **Palindromic Substrings**
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Problem:**&#xa0; 
+			</p>
+			<p>
+				Given a string `s`, count the number of palindromic substrings in it.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Solution:**
+			</p>
+			<p>
+				```python
+			</p>
+			<p>
+				def countSubstrings(s):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; def expand_around_center(left, right):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; count = 0
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; while left &gt;= 0 and right &lt; len(s) and s[left] == s[right]:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; count += 1
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; left -= 1
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; right += 1
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return count
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; count = 0
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; for i in range(len(s)):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; count += expand_around_center(i, i)&#xa0;&#xa0;&#xa0;&#xa0; # Odd length palindromes
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; count += expand_around_center(i, i + 1) # Even length palindromes
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; return count
+			</p>
+			<p>
+				```
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Time Complexity:** O(n²) – Similar expansion as above.&#xa0; 
+			</p>
+			<p>
+				**Space Complexity:** O(1) – No extra space used beyond variables.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				6. Palindromic Substrings
+			</p>
+			<p>
+				✅ One-liner:
+			</p>
+			<p>
+				Count all possible centers and expand to count mirrors.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				👶 3-liner for kids:
+			</p>
+			<p>
+				Count how many palindromes live inside the word.
+			</p>
+			<p>
+				Try every letter as the middle.
+			</p>
+			<p>
+				Add one each time you find one!
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				🧠 Mnemonics:
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				"Center expand" → while s[l] == s[r]: count += 1
+			</p>
+			<p>
+				"Two centers" → expand(i, i), expand(i, i+1)
+			</p>
+			<p>
+				"Add up" → count += ...
+			</p>
+			<p>
+				---
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				### 7. **Decode Ways**
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Problem:**&#xa0; 
+			</p>
+			<p>
+				A message containing letters from A-Z is encoded to numbers using 'A' = 1, 'B' = 2, ..., 'Z' = 26. Given a string `s`, determine the number of ways to decode it.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Solution:**
+			</p>
+			<p>
+				```python
+			</p>
+			<p>
+				def numDecodings(s):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; if not s or s[0] == '0':
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return 0
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; n = len(s)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; dp = [0] * (n + 1)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; dp[0], dp[1] = 1, 1
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; for i in range(2, n + 1):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; if s[i - 1] != '0':
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp[i] += dp[i - 1]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; if '10' &lt;= s[i - 2:i] &lt;= '26':
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp[i] += dp[i - 2]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; return dp[n]
+			</p>
+			<p>
+				```
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Time Complexity:** O(n) – Single pass through the string.&#xa0; 
+			</p>
+			<p>
+				**Space Complexity:** O(n) – DP array of size `n + 1`.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				7. Decode Ways
+			</p>
+			<p>
+				✅ One-liner:
+			</p>
+			<p>
+				DP counts ways to split string using valid '1'-'26' chunks.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				👶 3-liner for kids:
+			</p>
+			<p>
+				Each number becomes a letter.
+			</p>
+			<p>
+				Check one or two digits at a time.
+			</p>
+			<p>
+				Count how many messages you can make!
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				🧠 Mnemonics:
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				"Single digit valid" → if s[i-1] != '0': dp[i] += dp[i-1]
+			</p>
+			<p>
+				"Double digit valid" → if '10' &lt;= s[i-2:i] &lt;= '26': dp[i] += dp[i-2]
+			</p>
+			<p>
+				"Return total" → return dp[n]
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				---
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				### 8. **Coin Change**
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Problem:**&#xa0; 
+			</p>
+			<p>
+				Given an array `coins` representing different coin denominations and an integer `amount`, find the fewest number of coins needed to make up that amount.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Solution:**
+			</p>
+			<p>
+				```python
+			</p>
+			<p>
+				def coinChange(coins, amount):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; dp = [float('inf')] * (amount + 1)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; dp[0] = 0
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; for coin in coins:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for x in range(coin, amount + 1):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp[x] = min(dp[x], dp[x - coin] + 1)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; return dp[amount] if dp[amount] != float('inf') else -1
+			</p>
+			<p>
+				```
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Time Complexity:** O(n × m) – `n` is the amount, and `m` is the number of coins.&#xa0; 
+			</p>
+			<p>
+				**Space Complexity:** O(n) – DP array of size `amount + 1`.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				8. Coin Change
+			</p>
+			<p>
+				✅ One-liner:
+			</p>
+			<p>
+				Bottom-up DP to find min coins needed for each amount.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				👶 3-liner for kids:
+			</p>
+			<p>
+				You need change for an amount.
+			</p>
+			<p>
+				Try every coin for every total.
+			</p>
+			<p>
+				Keep the smallest number of coins!
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				🧠 Mnemonics:
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				"Try each coin" → dp[x] = min(dp[x], dp[x - coin] + 1)
+			</p>
+			<p>
+				"Init DP table" → dp = [inf] * (amount + 1); dp[0] = 0
+			</p>
+			<p>
+				"Return answer" → return dp[amount] if dp[amount] != inf else -1
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				---
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				### 9. **Maximum Product Subarray**
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Problem:**&#xa0; 
+			</p>
+			<p>
+				Given an integer array `nums`, find the contiguous subarray with the largest product.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				**Solution:**
+			</p>
+			<p>
+				```python
+			</p>
+			<p>
+				def maxProduct(nums):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; if not nums:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return 0
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; max_prod = min_prod = result = nums[0]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; for num in nums[1:]:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; temp = max 
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				9. Maximum Product Subarray
+			</p>
+			<p>
+				✅ One-liner:
+			</p>
+			<p>
+				Track both max and min at each index to handle negatives.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				👶 3-liner for kids:
+			</p>
+			<p>
+				Product grows fast, but negatives flip things.
+			</p>
+			<p>
+				Keep track of both biggest and smallest products.
+			</p>
+			<p>
+				Update the max each time!
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				🧠 Mnemonics:
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				"Swap on negative" → if num &lt; 0: max_prod, min_prod = min_prod, max_prod
+			</p>
+			<p>
+				"Update max/min" → max_prod = max(num, max_prod * num)
+			</p>
+			<p>
+				"Track global max" → result = max(result, max_prod)
+			</p>
+			<p>
+				&#xa0;
+			</p>
+	<p style="bottom: 10px; right: 10px; position: absolute;"><a href="https://wordtohtml.net" target="_blank" style="font-size:11px; color: #d0d0d0">Converted to HTML with WordToHTML.net</a> <span style="font-size:11px; color: #d0d0d0">|</span> <a href="https://wordtohtml.net" target="_blank" style="font-size:11px; color: #d0d0d0">Email Signature Generator</a></p>
+</body>
+</html>

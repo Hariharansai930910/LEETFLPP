@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 24.8.4.2 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="00:00:00"/>
+	<style type="text/css">
+		@page { size: 8.27in 11.69in; margin: 0.79in }
+		p { line-height: 115%; margin-bottom: 0.1in; background: transparent }
+		pre { font-family: "Liberation Mono", monospace; font-size: 10pt; background: transparent }
+	</style>
+</head>
+<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><pre>1. Maximum Subarray
+Problem:
+Find the contiguous subarray within a one-dimensional array of numbers that has the largest sum.
+
+Solution:
+
+python
+Copy
+Edit
+def maxSubArray(nums):
+    current_sum = max_sum = nums[0]
+    for num in nums[1:]:
+        current_sum = max(num, current_sum + num)
+        max_sum = max(max_sum, current_sum)
+    return max_sum
+Time Complexity: O(n) – We iterate through the array once.
+Space Complexity: O(1) – We use a constant amount of extra space.
+
+1. Maximum Subarray
+✅ One-liner:
+Use Kadane’s algorithm to track the best subarray sum ending at each index.
+
+👶 3-liner for kids:
+Add each number to your score.
+If it hurts more than helps, start fresh.
+Keep the highest score!
+
+🧠 Mnemonics:
+
+&quot;Choose max path&quot; → current_sum = max(num, current_sum + num)
+&quot;Track highest&quot; → max_sum = max(max_sum, current_sum)
+
+2. Jump Game
+Problem:
+Given an array of non-negative integers nums, where each element represents your maximum jump length at that position, determine if you can reach the last index.
+
+Solution:
+
+python
+Copy
+Edit
+def canJump(nums):
+    max_reach = 0
+    for i, num in enumerate(nums):
+        if i &gt; max_reach:
+            return False
+        max_reach = max(max_reach, i + num)
+    return True
+Time Complexity: O(n) – We iterate through the array once.
+Space Complexity: O(1) – We use a constant amount of extra space.
+2. Jump Game
+✅ One-liner:
+Track the furthest index reachable at every step.
+
+👶 3-liner for kids:
+Jump from stone to stone.
+If you can’t reach one, stop.
+Go as far as you can!
+
+🧠 Mnemonics:
+
+&quot;Too far to jump?&quot; → if i &gt; max_reach: return False
+&quot;Keep extending&quot; → max_reach = max(max_reach, i + num)
+
+
+3. Jump Game II
+Problem:
+Given an array of non-negative integers nums, where each element represents your maximum jump length at that position, find the minimum number of jumps to reach the last index.
+
+Solution:
+
+python
+Copy
+Edit
+def jump(nums):
+    jumps = current_end = farthest = 0
+    for i in range(len(nums) - 1):
+        farthest = max(farthest, i + nums[i])
+        if i == current_end:
+            jumps += 1
+            current_end = farthest
+    return jumps
+Time Complexity: O(n) – We iterate through the array once.
+Space Complexity: O(1) – We use a constant amount of extra space.
+3. Jump Game II
+✅ One-liner:
+Count jumps when current range ends and extend to farthest.
+
+👶 3-liner for kids:
+Each jump gets you closer to the goal.
+Wait till you run out of steps.
+Then take the next big jump!
+
+🧠 Mnemonics:
+
+&quot;Track farthest&quot; → farthest = max(farthest, i + nums[i])
+&quot;Jump when needed&quot; → if i == current_end: jumps += 1; current_end = farthest
+
+
+4. Gas Station
+Problem:
+There are n gas stations along a circular route, where the amount of gas at the i-th station is gas[i]. You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from the i-th station to its next (i + 1)th station. Given two integer arrays gas and cost, return the starting gas station's index if you can travel around the circuit once in the clockwise direction, otherwise return -1.
+
+Solution:
+
+python
+Copy
+Edit
+def canCompleteCircuit(gas, cost):
+    total_tank = current_tank = start_index = 0
+    for i in range(len(gas)):
+        total_tank += gas[i] - cost[i]
+        current_tank += gas[i] - cost[i]
+        if current_tank &lt; 0:
+            start_index = i + 1
+            current_tank = 0
+    return start_index if total_tank &gt;= 0 else -1
+Time Complexity: O(n) – We iterate through the arrays once.
+Space Complexity: O(1) – We use a constant amount of extra space.
+
+4. Gas Station
+✅ One-liner:
+Track total gas vs cost and reset start when running dry.
+
+👶 3-liner for kids:
+Drive your toy car around the track.
+If you run out, try the next start.
+If there’s more gas than cost, you’ll make it!
+
+🧠 Mnemonics:
+
+&quot;Reset on empty&quot; → if current_tank &lt; 0: start_index = i + 1; current_tank = 0
+&quot;Check total&quot; → return start_index if total_tank &gt;= 0 else -1
+
+5. Hand of Straights
+Problem:
+Alice has a hand of cards, given as an array of integers. She wants to rearrange the cards into groups of groupSize consecutive cards. Return true if and only if she can.
+
+Solution:
+
+python
+Copy
+Edit
+from collections import Counter
+import heapq
+
+def isNStraightHand(hand, groupSize):
+    if len(hand) % groupSize != 0:
+        return False
+
+    count = Counter(hand)
+    min_heap = list(count.keys())
+    heapq.heapify(min_heap)
+
+    while min_heap:
+        first = min_heap[0]
+        for i in range(first, first + groupSize):
+            if count[i] == 0:
+                return False
+            count[i] -= 1
+            if count[i] == 0:
+                if i != min_heap[0]:
+                    return False
+                heapq.heappop(min_heap)
+    return True
+Time Complexity: O(n log n) – Sorting the hand contributes O(n log n), and processing the cards contributes O(n).
+Space Complexity: O(n) – We use a counter to store the frequency of each card.
+
+
+
+
+5. Hand of Straights
+✅ One-liner:
+Use a min-heap to form straight hands from smallest cards.
+
+👶 3-liner for kids:
+Group cards into stairs like 3-4-5.
+Start with the smallest step.
+If a step is missing, the group falls!
+
+🧠 Mnemonics:
+
+&quot;Build stair group&quot; → for i in range(first, first + groupSize):
+&quot;Check step&quot; → if count[i] == 0: return False
+&quot;Pop if done&quot; → if count[i] == 0 and i == min_heap[0]: heapq.heappop(min_heap)
+
+
+6. Merge Triplets to Form Target Triplet
+Problem:
+Given a list of triplets triplets and a target triplet target, return true if it is possible to select some triplets from the list and merge them to form the target triplet.
+
+Solution:
+
+python
+Copy
+Edit
+def mergeTriplets(triplets, target):
+    good = set()
+    for triplet in triplets:
+        if all(triplet[i] &lt;= target[i] for i in range(3)):
+            for i in range(3):
+                if triplet[i] == target[i]:
+                    good.add(i)
+    return len(good) == 3
+Time Complexity: O(n) – We iterate through the triplets once.
+Space Complexity: O(1) – We use a constant amount of extra space.
+
+6. Merge Triplets to Form Target Triplet
+✅ One-liner:
+Pick only triplets ≤ target and track matched positions.
+
+👶 3-liner for kids:
+Each robot part must be same or smaller.
+Find triplets that match one or more parts.
+Collect all 3 to build your robot!
+
+🧠 Mnemonics:
+
+&quot;Filter valid&quot; → if all(triplet[i] &lt;= target[i] for i in range(3)):
+&quot;Track matches&quot; → if triplet[i] == target[i]: good.add(i)
+
+7. Partition Labels
+Problem:
+A string S of lowercase English letters is given. We want to partition this string into as many parts as possible so that each letter appears in at most one part. Return a list of integers representing the size of these parts.
+
+Solution:
+
+python
+Copy
+Edit
+def partitionLabels(S):
+    last = {c: i for i, c in enumerate(S)}
+    j = anchor = 0
+    result = []
+    for i, c in enumerate(S):
+        j = max(j, last[c])
+        if i == j:
+            result.append(i - anchor + 1)
+            anchor = i + 1
+    return result
+Time Complexity: O(n) – We iterate through the string twice.
+Space Complexity: O(1) – The space used for the dictionary is constant since there are at most 26 letters.
+
+7. Partition Labels
+✅ One-liner:
+Use each character’s last occurrence to determine cut points.
+
+👶 3-liner for kids:
+You want to cut paper without repeating letters.
+Wait until the last of all letters in the part.
+Then make a cut!
+
+🧠 Mnemonics:
+
+&quot;Last seen&quot; → last = {c: i for i, c in enumerate(S)}
+&quot;Cut when done&quot; → if i == j: result.append(i - anchor + 1); anchor = i + 1
+
+
+8. Valid Parenthesis String
+Problem:
+Given a string s containing only three types of characters: '(', ')', and '*', return true if s is valid.
+
+Solution:
+
+python
+Copy
+Edit
+def checkValidString(s):
+    low = high = 0
+    for char in s:
+        if char == '(':
+            low += 1
+            high += 1
+        elif char == ')
+::contentReference[oaicite:7]{index=7}
+ 
+
+
+
+
+
+
+You said:
+8. Valid Parenthesis String
+
+
+ChatGPT said:
+Here's the optimized Python code for Valid Parenthesis String (LeetCode 678), along with time and space complexity analysis:
+
+✅ Problem Summary:
+You are given a string s containing only '(', ')', and '*'. A '*' can be treated as:
+
+'('
+
+')'
+
+or an empty string ''
+
+Determine if the string is valid based on proper parenthesis rules.
+
+✅ Optimized Python Code:
+python
+Copy
+Edit
+def checkValidString(s: str) -&gt; bool:
+    low = high = 0  # Range of possible open parentheses count
+
+    for char in s:
+        if char == '(':
+            low += 1
+            high += 1
+        elif char == ')':
+            low -= 1
+            high -= 1
+        else:  # char == '*'
+            low -= 1   # treat '*' as ')'
+            high += 1  # treat '*' as '('
+
+        # Clamp low to 0 since we can't have negative open brackets
+        if high &lt; 0:
+            return False
+        if low &lt; 0:
+            low = 0
+
+    return low == 0
+✅ Time and Space Complexity:
+Time Complexity: O(n)
+We iterate through the string once.
+
+Space Complexity: O(1)
+Only two integer variables (low, high) are used, regardless of input size.
+
+8. Valid Parenthesis String
+✅ One-liner:
+Track a possible open-parentheses range with ‘*’ as wildcard.
+
+👶 3-liner for kids:
+You’re stacking cups.
+‘*’ can be a cup or nothing.
+Just don’t let the stack fall!
+
+🧠 Mnemonics:
+
+&quot;Range tracking&quot; → low -= 1; high += 1 (for *)
+&quot;Clamp to zero&quot; → if low &lt; 0: low = 0
+&quot;Early exit&quot; → if high &lt; 0: return False</pre>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 24.8.4.2 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="00:00:00"/>
+	<style type="text/css">
+		@page { size: 8.27in 11.69in; margin: 0.79in }
+		p { line-height: 115%; margin-bottom: 0.1in; background: transparent }
+		pre { font-family: "Liberation Mono", monospace; font-size: 10pt; background: transparent }
+	</style>
+</head>
+<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><pre>Here are optimized Python solutions for each problem, along with their time and space complexities:
+
+---
+
+### 1. **Subsets**
+
+**Problem:**  
+Generate all possible subsets of a given set of distinct integers.
+
+**Solution:**
+```python
+def subsets(nums):
+    result = []
+    def backtrack(start, path):
+        result.append(path)
+        for i in range(start, len(nums)):
+            backtrack(i + 1, path + [nums[i]])
+    backtrack(0, [])
+    return result
+```
+
+**Time Complexity:** O(2^N)  
+**Space Complexity:** O(N)
+
+### 1. **Subsets**
+
+**✅ One-liner:**  
+Use backtracking to include or exclude each number.
+
+**👶 3-liner for kids:**  
+We pick numbers one by one.  
+Each time, we decide to keep it or skip it.  
+That gives us all possible combinations.
+
+**🧠 Mnemonics:**
+- &quot;Start with empty list&quot; → `res = [[]]`
+- &quot;Try adding&quot; → `dfs(index + 1, path + [nums[i]])`
+- &quot;Try skipping&quot; → `dfs(index + 1, path)`
+
+---
+
+---
+
+### 2. **Combination Sum**
+
+**Problem:**  
+Find all unique combinations of candidates where the chosen numbers sum to a target. Each number in candidates may be used unlimited times.
+
+**Solution:**
+```python
+def combinationSum(candidates, target):
+    result = []
+    def backtrack(start, target, path):
+        if target == 0:
+            result.append(path)
+            return
+        for i in range(start, len(candidates)):
+            if candidates[i] &gt; target:
+                continue
+            backtrack(i, target - candidates[i], path + [candidates[i]])
+    candidates.sort()
+    backtrack(0, target, [])
+    return result
+```
+
+**Time Complexity:** O(N^(T/M))  
+**Space Complexity:** O(T/M)
+
+### 2. **Combination Sum**
+
+**✅ One-liner:**  
+Use DFS to try combinations, reusing the same number.
+
+**👶 3-liner for kids:**  
+We keep adding numbers until we hit the target.  
+We can use the same number again.  
+If it’s too much, we stop and go back.
+
+**🧠 Mnemonics:**
+- &quot;Base case&quot; → `if target == 0: add path`
+- &quot;Too big&quot; → `if target &lt; 0: return`
+- &quot;Try again&quot; → `dfs(i, path + [candidates[i]], target - candidates[i])`
+
+---
+
+---
+
+### 3. **Combination Sum II**
+
+**Problem:**  
+Find all unique combinations in candidates where the chosen numbers sum to target. Each number in candidates may only be used once. The solution set must not contain duplicate combinations.
+
+**Solution:**
+```python
+def combinationSum2(candidates, target):
+    result = []
+    candidates.sort()
+    def backtrack(start, target, path):
+        if target == 0:
+            result.append(path)
+            return
+        prev = -1
+        for i in range(start, len(candidates)):
+            if candidates[i] == prev:
+                continue
+            if candidates[i] &gt; target:
+                break
+            backtrack(i + 1, target - candidates[i], path + [candidates[i]])
+            prev = candidates[i]
+    backtrack(0, target, [])
+    return result
+```
+
+**Time Complexity:** O(2^N)  
+**Space Complexity:** O(N)
+
+### 3. **Combination Sum II**
+
+**✅ One-liner:**  
+Like Combination Sum but skip duplicates and don’t reuse elements.
+
+**👶 3-liner for kids:**  
+We can’t use the same number again.  
+We also skip duplicates to avoid repeat combos.  
+We keep trying until the sum matches the target.
+
+**🧠 Mnemonics:**
+- &quot;Sort first&quot; → `candidates.sort()`
+- &quot;Skip duplicates&quot; → `if i &gt; start and candidates[i] == candidates[i - 1]: continue`
+- &quot;DFS without reuse&quot; → `dfs(i + 1, path + [candidates[i]], target - candidates[i])`
+
+---
+
+### 4. **Permutations**
+
+**Problem:**  
+Return all possible permutations of a list of distinct integers.
+
+**Solution:**
+```python
+def permute(nums):
+    result = []
+    def backtrack(path, options):
+        if not options:
+            result.append(path)
+            return
+        for i in range(len(options)):
+            backtrack(path + [options[i]], options[:i] + options[i+1:])
+    backtrack([], nums)
+    return result
+```
+
+**Time Complexity:** O(N!)  
+**Space Complexity:** O(N)
+
+
+### 4. **Permutations**
+
+**✅ One-liner:**  
+Use backtracking to build all possible orders.
+
+**👶 3-liner for kids:**  
+We make all different orders of the numbers.  
+We pick one at a time and don’t repeat it.  
+When the list is full, we save it.
+
+**🧠 Mnemonics:**
+- &quot;Track used&quot; → `if num in used: continue`
+- &quot;Choose number&quot; → `path.append(num)`
+- &quot;Backtrack&quot; → `path.pop()` and `used.remove(num)`
+
+---
+
+### 5. **Subsets II**
+
+**Problem:**  
+Return all possible subsets of a list of integers that might contain duplicates. The solution set must not contain duplicate subsets.
+
+**Solution:**
+```python
+def subsetsWithDup(nums):
+    result = []
+    nums.sort()
+    def backtrack(start, path):
+        result.append(path)
+        for i in range(start, len(nums)):
+            if i &gt; start and nums[i] == nums[i - 1]:
+                continue
+            backtrack(i + 1, path + [nums[i]])
+    backtrack(0, [])
+    return result
+```
+
+**Time Complexity:** O(2^N)  
+**Space Complexity:** O(N)
+
+### 5. **Subsets II**
+
+**✅ One-liner:**  
+Backtracking with duplicate skip using sorted input.
+
+**👶 3-liner for kids:**  
+Like normal subsets, but now we skip duplicates.  
+We sort the list so we can spot repeats.  
+We only use the first time a number shows up at a level.
+
+**🧠 Mnemonics:**
+- &quot;Sort input&quot; → `nums.sort()`
+- &quot;Skip repeat at level&quot; → `if i &gt; start and nums[i] == nums[i - 1]: continue`
+- &quot;DFS normally&quot; → `dfs(i + 1, path + [nums[i]])`
+
+---
+
+### 6. **Word Search**
+
+**Problem:**  
+Given an `m x n` board and a word, find if the word exists in the grid. The word can be constructed from letters of sequentially adjacent cells.
+
+**Solution:**
+```python
+def exist(board, word):
+    rows, cols = len(board), len(board[0])
+    def backtrack(r, c, index):
+        if index == len(word):
+            return True
+        if r &lt; 0 or r &gt;= rows or c &lt; 0 or c &gt;= cols or board[r][c] != word[index]:
+            return False
+        temp, board[r][c] = board[r][c], '#'
+        found = (backtrack(r+1, c, index+1) or
+                 backtrack(r-1, c, index+1) or
+                 backtrack(r, c+1, index+1) or
+                 backtrack(r, c-1, index+1))
+        board[r][c] = temp
+        return found
+    for r in range(rows):
+        for c in range(cols):
+            if backtrack(r, c, 0):
+                return True
+    return False
+```
+
+**Time Complexity:** O(M * N * 4^L)  
+**Space Complexity:** O(L)
+
+---
+
+### 6. **Word Search**
+
+**✅ One-liner:**  
+Backtrack through board cells matching word letters.
+
+**👶 3-liner for kids:**  
+We try to find each letter one by one.  
+We can only move up/down/left/right.  
+If it works, we return true!
+
+**🧠 Mnemonics:**
+- &quot;Check match&quot; → `if board[i][j] != word[pos]: return`
+- &quot;Mark visited&quot; → `board[i][j] = '#'`
+- &quot;Unmark (backtrack)&quot; → `board[i][j] = original_letter`
+
+---
+
+---
+
+### 7. **Palindrome Partitioning**
+
+**Problem:**  
+Partition a string such that every substring is a palindrome. Return all possible palindrome partitioning of the string.
+
+**Solution:**
+```python
+def partition(s):
+    result = []
+    def is_palindrome(sub):
+        return sub == sub[::-1]
+    def backtrack(start, path):
+        if start == len(s):
+            result.append(path)
+            return
+        for end in range(start + 1, len(s) + 1):
+            if is_palindrome(s[start:end]):
+                backtrack(end, path + [s[start:end]])
+    backtrack(0, [])
+    return result
+```
+
+**Time Complexity:** O(2^N)  
+**Space Complexity:** O(N)
+
+
+### 7. **Palindrome Partitioning**
+
+**✅ One-liner:**  
+Use backtracking to cut the string at every palindrome point.
+
+**👶 3-liner for kids:**  
+We break the string into pieces.  
+Only cut when the piece is a palindrome.  
+We keep cutting until the whole string is split.
+
+**🧠 Mnemonics:**
+- &quot;Check palindrome&quot; → `if s[l:r+1] == s[l:r+1][::-1]`
+- &quot;Cut and continue&quot; → `dfs(end + 1, path + [s[start:end+1]])`
+- &quot;Add to result&quot; → `if start == len(s): res.append(path)`
+
+---
+
+### 8. **Letter Combinations of a Phone Number**
+
+**Problem:**  
+Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.
+
+**Solution:**
+```python
+def letterCombinations(digits):
+    if not digits:
+        return []
+    phone = {
+        '2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl',
+        '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'
+    }
+    result = []
+    def backtrack(index, path):
+        if index == len(digits):
+            result.append(path)
+            return
+        for char in phone[digits[index]]:
+            backtrack(index + 1, path + char)
+    backtrack(0, '')
+    return result
+```
+
+**Time Complexity:** O(4^N)  
+**Space Complexity:** O(N)
+
+
+### 8. **Letter Combinations of a Phone Number**
+
+**✅ One-liner:**  
+Backtrack all digit-letter mappings like a tree.
+
+**👶 3-liner for kids:**  
+Each number maps to letters.  
+We pick one letter per number.  
+We try every combination possible.
+
+**🧠 Mnemonics:**
+- &quot;Map digits&quot; → `digit_map = {'2': 'abc', ...}`
+- &quot;For each digit&quot; → `for letter in digit_map[digit]:`
+- &quot;Backtrack&quot; → `dfs(index + 1, path + letter)`
+
+---
+
+### 9. **N Queens**
+
+**Problem:**  
+The n-queens puzzle is the problem of placing n queens on an n×n chessboard such that no two queens attack each other. Return all distinct solutions.
+
+**Solution:**
+```python
+def solveNQueens(n):
+    def backtrack(r):
+        if r == n:
+            board = [''.join(row) for row in chessboard]
+            result.append(board)
+            return
+        for c in range(n):
+            if c in cols or (r + c) in diag1 or (r - c) in diag2:
+                continue
+            cols.add(c)
+            diag1.add(r + c)
+            diag2.add(r - c)
+            chessboard[r][c] = 'Q'
+            backtrack 
+
+
+### 9. **N Queens**
+
+**✅ One-liner:**  
+Place queens row by row, checking for safe spots.
+
+**👶 3-liner for kids:**  
+We try to put queens one row at a time.  
+We make sure they don’t attack each other.  
+If it works, we save the board setup.
+
+**🧠 Mnemonics:**
+- &quot;Loop columns&quot; → `for col in range(n):`
+- &quot;Check safe&quot; → `if col not in cols and row+col not in diag1 and row-col not in diag2`
+- &quot;Place &amp; recurse&quot; → `dfs(row + 1)` and backtrack positions</pre>
+</body>
+</html>

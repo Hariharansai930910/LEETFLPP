@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 24.8.4.2 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="00:00:00"/>
+	<style type="text/css">
+		@page { size: 8.27in 11.69in; margin: 0.79in }
+		p { line-height: 115%; margin-bottom: 0.1in; background: transparent }
+		pre { font-family: "Liberation Mono", monospace; font-size: 10pt; background: transparent }
+	</style>
+</head>
+<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><pre>1. Number of Islands
+Problem:
+Given a 2D grid map of '1's (land) and '0's (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically.
+
+Solution:
+
+python
+Copy
+Edit
+def numIslands(grid):
+    if not grid:
+        return 0
+
+    def dfs(r, c):
+        if r &lt; 0 or r &gt;= len(grid) or c &lt; 0 or c &gt;= len(grid[0]) or grid[r][c] == '0':
+            return
+        grid[r][c] = '0'  # Mark as visited
+        dfs(r + 1, c)
+        dfs(r - 1, c)
+        dfs(r, c + 1)
+        dfs(r, c - 1)
+
+    count = 0
+    for r in range(len(grid)):
+        for c in range(len(grid[0])):
+            if grid[r][c] == '1':
+                dfs(r, c)
+                count += 1
+    return count
+Time Complexity: O(M × N), where M is the number of rows and N is the number of columns in the grid. Each cell is visited once.
+
+Space Complexity: O(M × N) in the worst case for the recursion stack.
+
+
+. Number of Islands
+✅ One-liner:
+Use DFS to flood-fill land and count how many times it starts.
+
+👶 3-liner for kids:
+See land? Dive in and mark all connected land.
+Go up, down, left, right — turn it to water.
+Count how many dives you did!
+
+🧠 Mnemonics:
+
+&quot;Land found → dive!&quot; → if grid[r][c] == '1': dfs(r, c); count += 1
+&quot;Flood fill&quot; → grid[r][c] = '0'
+&quot;Recursive splash&quot; → dfs(r + 1, c), dfs(r - 1, c), dfs(r, c + 1), dfs(r, c - 1)
+
+
+
+
+2. Max Area of Island
+Problem:
+Given a 2D grid of 0's (water) and 1's (land), find the maximum area of an island in the grid.
+
+Solution:
+
+python
+Copy
+Edit
+def maxAreaOfIsland(grid):
+    if not grid:
+        return 0
+
+    def dfs(r, c):
+        if r &lt; 0 or r &gt;= len(grid) or c &lt; 0 or c &gt;= len(grid[0]) or grid[r][c] == 0:
+            return 0
+        grid[r][c] = 0  # Mark as visited
+        return 1 + dfs(r + 1, c) + dfs(r - 1, c) + dfs(r, c + 1) + dfs(r, c - 1)
+
+    max_area = 0
+    for r in range(len(grid)):
+        for c in range(len(grid[0])):
+            if grid[r][c] == 1:
+                max_area = max(max_area, dfs(r, c))
+    return max_area
+Time Complexity: O(M × N), where M is the number of rows and N is the number of columns in the grid. Each cell is visited once.
+
+Space Complexity: O(M × N) in the worst case for the recursion stack.
+2. Max Area of Island
+✅ One-liner:
+DFS to count connected land areas and track the max size.
+
+👶 3-liner for kids:
+Explore each island like a treasure map.
+Count each land you step on.
+Keep the biggest number!
+
+🧠 Mnemonics:
+
+&quot;Step on land&quot; → return 1 + dfs(...) + ...
+&quot;Sink it&quot; → grid[r][c] = 0
+&quot;Track best&quot; → max_area = max(max_area, dfs(r, c))
+
+
+
+3. Clone Graph
+Problem:
+Given a reference of a node in a connected undirected graph, return a deep copy (clone) of the graph.
+
+Solution:
+
+python
+Copy
+Edit
+class Node:
+    def __init__(self, val=0, neighbors=None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+
+def cloneGraph(node):
+    if not node:
+        return None
+
+    old_to_new = {}
+
+    def dfs(node):
+        if node in old_to_new:
+            return old_to_new[node]
+        copy = Node(node.val)
+        old_to_new[node] = copy
+        for neighbor in node.neighbors:
+            copy.neighbors.append(dfs(neighbor))
+        return copy
+
+    return dfs(node)
+Time Complexity: O(N + M), where N is the number of nodes and M is the number of edges. Each node and edge is visited once.
+
+Space Complexity: O(N), to store the mapping of old nodes to new nodes.
+
+3. Clone Graph
+✅ One-liner:
+Use DFS and a hashmap to copy each node and its neighbors.
+
+👶 3-liner for kids:
+Copy the node. Then copy its friends.
+Don’t copy the same kid twice!
+Use a notebook to remember who you copied.
+
+🧠 Mnemonics:
+
+&quot;Memoize node&quot; → old_to_new[node] = copy
+&quot;Visit neighbors&quot; → copy.neighbors.append(dfs(neighbor))
+&quot;Return copy&quot; → return old_to_new[node]
+
+4. Walls and Gates
+Problem:
+Fill each empty room with the distance to its nearest gate. If it is impossible to reach a gate, leave the room's value as INF.
+
+Solution:
+
+python
+Copy
+Edit
+from collections import deque
+
+def wallsAndGates(rooms):
+    if not rooms:
+        return
+
+    rows, cols = len(rooms), len(rooms[0])
+    queue = deque()
+
+    for r in range(rows):
+        for c in range(cols):
+            if rooms[r][c] == 0:
+                queue.append((r, c))
+
+    directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+    while queue:
+        r, c = queue.popleft()
+        for dr, dc in directions:
+            rr, cc = r + dr, c + dc
+            if 0 &lt;= rr &lt; rows and 0 &lt;= cc &lt; cols and rooms[rr][cc] == float('inf'):
+                rooms[rr][cc] = rooms[r][c] + 1
+                queue.append((rr, cc))
+Time Complexity: O(M × N), where M is the number of rows and N is the number of columns in the grid. Each cell is processed once.
+
+Space Complexity: O(M × N) for the queue in the worst case.
+
+. Walls and Gates
+✅ One-liner:
+Use BFS from every gate to fill rooms with the shortest distance.
+
+👶 3-liner for kids:
+Start walking from every open gate.
+Step by step, add 1 to your count.
+Stop if you hit a wall!
+
+🧠 Mnemonics:
+
+&quot;Start from gates&quot; → if rooms[r][c] == 0: queue.append((r, c))
+&quot;Step update&quot; → rooms[rr][cc] = rooms[r][c] + 1
+&quot;BFS directions&quot; → for dr, dc in [(1,0), (-1,0), (0,1), (0,-1)]
+
+
+
+5. Rotting Oranges
+Problem:
+Given a grid of oranges, determine the minimum time required for all oranges to become rotten. If impossible, return -1.
+
+Solution:
+
+python
+Copy
+Edit
+from collections import deque
+
+def orangesRotting(grid):
+    if not grid:
+        return -1
+
+    rows, cols = len(grid), len(grid[0])
+    queue = deque()
+    fresh_oranges = 0
+
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == 2:
+                queue.append((r, c, 0))
+            elif grid[r][c] == 1:
+                fresh_oranges += 1
+
+    directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+    minutes = 0
+
+    while queue:
+        r, c, minutes = queue.popleft()
+        for dr, dc in directions:
+            rr, cc = r + dr, c + dc
+            if 0 &lt;= rr &lt; rows and 0 &lt;= cc &lt; cols and grid[rr][cc] == 1:
+                grid[rr][cc] = 2
+                fresh_oranges -= 1
+                queue.append((rr, cc, minutes + 1))
+
+    return minutes if fresh_oranges == 0 else -1
+Time Complexity: O(M × N), where M is the number of rows and N is the number of columns in the grid. Each cell is processed once.
+
+Space Complexity: O(M × N) for the queue in the worst case.
+
+5. Rotting Oranges
+✅ One-liner:
+Use BFS to spread rot from all rotten oranges minute by minute.
+
+👶 3-liner for kids:
+Rotten oranges spread the stink.
+Each minute, they infect their neighbors.
+If any fresh ones are left, return -1!
+
+🧠 Mnemonics:
+
+&quot;Start with all rotten&quot; → if grid[r][c] == 2: queue.append((r, c, 0))
+&quot;Spread the rot&quot; → grid[rr][cc] = 2
+&quot;Track time&quot; → minutes = max(minutes, cur_minute)
+
+
+6. Pacific Atlantic Water Flow
+Problem:
+Given an m x n matrix of heights, determine the list of grid coordinates where water can flow to both the Pacific and Atlantic oceans.
+
+Solution:
+
+python
+Copy
+Edit
+def pacificAtlantic(heights):
+    if not heights:
+        return []
+
+    m, n = len(heights), len(heights[0])
+    pacific = set()
+    atlantic = set()
+
+    def dfs(r, c, visited, prev_height):
+        if (
+            (r, c) in visited or
+            r &lt; 0 or c &lt; 0 or r &gt;= m or c &gt;= n or
+            heights[r][c] &lt; prev_height
+        ):
+            return
+        visited.add((r, c))
+        for dr, dc in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+            dfs(r + dr, c + dc, visited, heights[r][c])
+
+    for i in range(m):
+        dfs(i, 0, pacific, heights[i][0])
+        dfs(i, n - 1, atlantic, heights[i][n - 1])
+    for j in range(n):
+        dfs(0, j, pacific, heights[0][j])
+        dfs(m - 1, j, atlantic, heights[m - 1][j])
+
+    return list(pacific &amp; atlantic)
+Time Complexity: O(m × n), where m is the number of rows and n is the number of columns. Each cell is processed at most twice, once for each ocean.
+
+Space Complexity: O(m × n) for the pacific and atlantic sets and the recursion stack.
+
+
+6. Pacific Atlantic Water Flow
+✅ One-liner:
+DFS from both ocean edges to find cells that can reach both.
+
+👶 3-liner for kids:
+Water flows downhill or flat.
+Start from each ocean and mark the cells.
+Return where both oceans meet!
+
+🧠 Mnemonics:
+
+&quot;Visit cell&quot; → visited.add((r, c))
+&quot;DFS only higher/equal&quot; → if heights[r][c] &lt; prev_height: return
+&quot;Intersect both oceans&quot; → return list(pacific &amp; atlantic)
+
+
+7. Surrounded Regions
+Problem:
+Given an m x n board containing 'X' and 'O', capture all regions surrounded by 'X'.
+
+Solution:
+
+python
+Copy
+Edit
+def solve(board):
+    if not board or not board[0]:
+        return
+
+    m, n = len(board), len(board[0])
+
+    def dfs(r, c):
+        if r &lt; 0 or c &lt; 0 or r &gt;= m or c &gt;= n or board[r][c] != 'O':
+            return
+        board[r][c] = '#'
+        for dr, dc in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+            dfs(r + dr, c + dc)
+
+    for i in range(m):
+        dfs(i, 0)
+        dfs(i, n - 1)
+    for j in range(n):
+        dfs(0, j)
+        dfs(m - 1, j)
+
+    for i in range(m):
+        for j in range(n):
+            if board[i][j] == 'O':
+                board[i][j] = 'X'
+            elif board[i][j] == '#':
+                board[i][j] = 'O'
+Time Complexity: O(m × n), as each cell is processed at most twice.
+
+Space Complexity: O(m × n) for the recursion stack in the worst case.
+
+7. Surrounded Regions
+✅ One-liner:
+Use DFS to mark safe ‘O’s on the border, then flip the rest.
+
+👶 3-liner for kids:
+Mark the border O’s as safe.
+Flip all trapped O’s to X.
+Flip the safe ones back.
+
+🧠 Mnemonics:
+
+&quot;Safe marker&quot; → board[r][c] = '#'
+&quot;Flip trapped&quot; → if board[i][j] == 'O': board[i][j] = 'X'
+&quot;Restore safe&quot; → if board[i][j] == '#': board[i][j] = 'O'
+
+
+8. Course Schedule
+Problem:
+Determine if it's possible to finish all courses given the prerequisites.
+
+Solution:
+
+python
+Copy
+Edit
+from collections import defaultdict, deque
+
+def canFinish(numCourses, prerequisites):
+    graph = defaultdict(list)
+    in_degree = [0] * numCourses
+
+    for dest, src in prerequisites:
+        graph[src].append(dest)
+        in_degree[dest] += 1
+
+    queue = deque([i for i in range(numCourses) if in_degree[i] == 0])
+    visited = 0
+
+    while queue:
+        node = queue.popleft()
+        visited += 1
+        for neighbor in graph[node]:
+            in_degree[neighbor] -= 1
+            if in_degree[neighbor] == 0:
+                queue.append(neighbor)
+
+    return visited == numCourses
+Time Complexity: O(V + E), where V is the number of courses and E is the number of prerequisites.
+
+Space Complexity: O(V + E) for the graph representation.
+
+8. Course Schedule
+✅ One-liner:
+Use topological sort to check if all courses can be completed.
+
+👶 3-liner for kids:
+Take courses with no prerequisites.
+Mark them done and reduce other needs.
+If you finish all, you pass!
+
+🧠 Mnemonics:
+
+&quot;Build in-degree&quot; → in_degree[dest] += 1
+&quot;Start queue&quot; → queue = deque([i for i in range(numCourses) if in_degree[i] == 0])
+&quot;Process course&quot; → in_degree[neighbor] -= 1
+
+
+
+9. Course Schedule II
+Problem:
+Return the order of courses to finish all courses given the prerequisites.
+
+Solution:
+
+python
+Copy
+Edit
+from collections import defaultdict, deque
+
+def findOrder(numCourses, prerequisites):
+    graph = defaultdict(list)
+    in_degree = [0] * numCourses
+
+    for dest, src in prerequisites:
+        graph[src].append(dest)
+        in_degree[dest] += 1
+
+    queue = deque([i for i in range(numCourses) if in_degree[i] == 0])
+    order = []
+
+    while queue:
+        node = queue.popleft()
+        order.append(node)
+        for neighbor in graph[node]:
+            in_degree[neighbor] -= 1
+            if in_degree[neighbor] == 0:
+                queue.append(neighbor)
+
+    return order if len(order) == numCourses else []
+Time Complexity: O(V + E), where V is the number of courses and E is the number of prerequisites.
+
+Space Complexity: O(V + E) for the graph representation.
+
+9. Course Schedule II
+✅ One-liner:
+Topological sort to return course order or detect cycle.
+
+👶 3-liner for kids:
+Take the course if it’s unlocked.
+Unlock its neighbors.
+Return the order if all are done!
+
+🧠 Mnemonics:
+
+&quot;Track order&quot; → order.append(node)
+&quot;Add to queue&quot; → if in_degree[neighbor] == 0: queue.append(neighbor)
+&quot;Check all done&quot; → return order if len(order) == numCourses else []
+
+
+
+10. Graph Valid Tree
+Problem:
+Determine if a given undirected graph is a valid tree.
+
+Solution:
+
+python
+Copy
+Edit
+def validTree(n, edges):
+    if len(edges) != n - 1:
+        return False
+
+    parent = list(range(n))
+
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+
+    for u, v in edges:
+        pu, pv = find(u), find(v)
+        if pu == pv:
+            return False
+        parent[pu] = pv
+
+    return True
+Time Complexity: O(n + e), where n is the number of nodes and e is the number of edges.
+
+Space Complexity: O(n) for the parent array.
+
+10. Graph Valid Tree
+✅ One-liner:
+A graph is a tree if it's fully connected and has no cycles.
+
+👶 3-liner for kids:
+Check if it connects all nodes.
+Make sure no loops form.
+Use union-find to manage groups.
+
+🧠 Mnemonics:
+
+&quot;Cycle check&quot; → if pu == pv: return False
+&quot;Union sets&quot; → parent[pu] = pv
+&quot;Edge count rule&quot; → if len(edges) != n - 1: return False
+
+
+
+11. Number of Connected Components in an Undirected Graph
+Problem:
+Given n nodes and a list of undirected edges, return the number of connected components.
+
+Solution:
+
+python
+Copy
+Edit
+def countComponents(n, edges):
+    parent = list(range(n))
+
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+
+    for u, v in edges:
+        pu, pv = find(u), find(v)
+        if pu != pv:
+            parent[pu] = pv
+
+    return len(set(find(x) for x in range(n)))
+Time Complexity: O(n + e), where n is the number of nodes and e is the number of edges.
+11. Number of Connected Components
+✅ One-liner:
+Union nodes and count how many groups remain.
+
+👶 3-liner for kids:
+Connect nodes in the same group.
+Keep combining connected ones.
+Count the groups at the end.
+
+🧠 Mnemonics:
+
+&quot;Find leader&quot; → if parent[x] != x: parent[x] = find(parent[x])
+&quot;Union disjoint&quot; → if pu != pv: parent[pu] = pv
+&quot;Count groups&quot; → return len(set(find(x) for x in range(n)))
+</pre>
+</body>
+</html>

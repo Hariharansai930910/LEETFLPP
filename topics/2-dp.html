@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="utf-8" />
+		<title>
+		</title>
+		<style>
+			body { font-family:'Times New Roman'; font-size:12pt }
+			p { margin:0pt }
+@media (max-width: 900px) { 
+img { 
+   max-width: 100%;
+   height: auto;
+}
+
+.table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td, th {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+}	
+
+
+		</style>
+	</head>
+	<body>
+			<p>
+				1.)
+			</p>
+			<p>
+				class Solution:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; def uniquePaths(self, m: int, n: int) -&gt; int:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; row = [1] * n
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for i in range(m - 1):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; newRow = [1] * n
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for j in range(n - 2, -1, -1):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; newRow[j] = newRow[j + 1] + row[j]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; row = newRow
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return row[0]
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				1. Unique Paths
+			</p>
+			<p>
+				✅ One-liner:
+			</p>
+			<p>
+				Build bottom-up by storing path counts from the bottom row to the top.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				👶 3-liner for kids:
+			</p>
+			<p>
+				You can move right or down in a grid.
+			</p>
+			<p>
+				Each cell holds total paths from there.
+			</p>
+			<p>
+				Start at the bottom and fill the top!
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				🧠 Mnemonics:
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				"Start with rightmost path as 1s" → row = [1] * n
+			</p>
+			<p>
+				"Move bottom-up" → newRow[j] = newRow[j+1] + row[j]
+			</p>
+			<p>
+				"Top-left holds the answer" → return row[0]
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				2.)
+			</p>
+			<p>
+				class Solution:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; def longestCommonSubsequence(self, text1: str, text2: str) -&gt; int:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; if len(text1) &lt; len(text2):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; text1, text2 = text2, text1
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; 
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; prev = [0] * (len(text2) + 1)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; curr = [0] * (len(text2) + 1)
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for i in range(len(text1) - 1, -1, -1):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for j in range(len(text2) - 1, -1, -1):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; if text1[i] == text2[j]:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; curr[j] = 1 + prev[j + 1]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; else:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; curr[j] = max(curr[j + 1], prev[j])
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; prev, curr = curr, prev
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return prev[0]
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				2. Longest Common Subsequence
+			</p>
+			<p>
+				✅ One-liner:
+			</p>
+			<p>
+				Compare characters bottom-up and store best matches.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				👶 3-liner for kids:
+			</p>
+			<p>
+				Look for common letters in two words.
+			</p>
+			<p>
+				If letters match, grow your chain.
+			</p>
+			<p>
+				Remember best paths from the future!
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				🧠 Mnemonics:
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				"Match adds 1" → curr[j] = 1 + prev[j + 1]
+			</p>
+			<p>
+				"Else take max" → curr[j] = max(curr[j + 1], prev[j])
+			</p>
+			<p>
+				"Swap rows" → prev, curr = curr, prev
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				3.)
+			</p>
+			<p>
+				class Solution:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; def maxProfit(self, prices: List[int]) -&gt; int:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; n = len(prices)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp1_buy, dp1_sell = 0, 0&#xa0; 
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp2_buy = 0
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for i in range(n - 1, -1, -1):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp_buy = max(dp1_sell - prices[i], dp1_buy)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp_sell = max(dp2_buy + prices[i], dp1_sell)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp2_buy = dp1_buy
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp1_buy, dp1_sell = dp_buy, dp_sell
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return dp1_buy
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				3. Best Time to Buy/Sell Stock III
+			</p>
+			<p>
+				✅ One-liner:
+			</p>
+			<p>
+				Track two transactions using rolling DP updates from right to left.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				👶 3-liner for kids:
+			</p>
+			<p>
+				You can buy and sell twice.
+			</p>
+			<p>
+				Track your best profits in reverse.
+			</p>
+			<p>
+				Keep updating what to buy/sell!
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				🧠 Mnemonics:
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				"Buy max profit" → dp_buy = max(dp1_sell - price, dp1_buy)
+			</p>
+			<p>
+				"Sell max profit" → dp_sell = max(dp2_buy + price, dp1_sell)
+			</p>
+			<p>
+				"Shift state" → dp2_buy = dp1_buy
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				4.)
+			</p>
+			<p>
+				class Solution:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; def change(self, amount: int, coins: List[int]) -&gt; int:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp = [0] * (amount + 1)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp[0] = 1
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for i in range(len(coins) - 1, -1, -1):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; nextDP = [0] * (amount + 1)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; nextDP[0] = 1
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for a in range(1, amount + 1):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; nextDP[a] = dp[a]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; if a - coins[i] &gt;= 0:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; nextDP[a] += nextDP[a - coins[i]]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp = nextDP
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return dp[amount]
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				4. Coin Change II
+			</p>
+			<p>
+				✅ One-liner:
+			</p>
+			<p>
+				Use DP to count all combinations to reach an amount.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				👶 3-liner for kids:
+			</p>
+			<p>
+				You can use each coin as many times.
+			</p>
+			<p>
+				Try every way to make the target.
+			</p>
+			<p>
+				Count how many combos reach it!
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				🧠 Mnemonics:
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				"Init base case" → dp[0] = 1
+			</p>
+			<p>
+				"Use each coin" → nextDP[a] += nextDP[a - coin]
+			</p>
+			<p>
+				"Swap arrays" → dp = nextDP
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				5.)
+			</p>
+			<p>
+				class Solution:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; def findTargetSumWays(self, nums: List[int], target: int) -&gt; int:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp = defaultdict(int)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp[0] = 1
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for num in nums:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; next_dp = defaultdict(int)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for total, count in dp.items():
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; next_dp[total + num] += count
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; next_dp[total - num] += count
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp = next_dp
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; 
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return dp[target]
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				5. Target Sum
+			</p>
+			<p>
+				✅ One-liner:
+			</p>
+			<p>
+				DP maps every possible sum from ± choices of nums.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				👶 3-liner for kids:
+			</p>
+			<p>
+				Each number can be + or –.
+			</p>
+			<p>
+				Try both for every total.
+			</p>
+			<p>
+				Count all paths to your goal!
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				🧠 Mnemonics:
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				"Try both signs" → next_dp[total ± num] += count
+			</p>
+			<p>
+				"Loop through totals" → for total, count in dp.items():
+			</p>
+			<p>
+				"Final result" → return dp[target]
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				6.)
+			</p>
+			<p>
+				class Solution:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; def isInterleave(self, s1: str, s2: str, s3: str) -&gt; bool:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; m, n = len(s1), len(s2)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; if m + n != len(s3):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return False
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; if n &lt; m:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; s1, s2 = s2, s1
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; m, n = n, m
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; 
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp = [False for _ in range(n + 1)]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp[n] = True
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for i in range(m, -1, -1):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; nextDp = True
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for j in range(n - 1, -1, -1):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; res = False
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; if i &lt; m and s1[i] == s3[i + j] and dp[j]:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; res = True
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; if j &lt; n and s2[j] == s3[i + j] and nextDp:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; res = True
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp[j] = res
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; nextDp = dp[j]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return dp[0]
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				6. Interleaving String
+			</p>
+			<p>
+				✅ One-liner:
+			</p>
+			<p>
+				Use 1D DP to check if s3 can be formed by interleaving s1 and s2.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				👶 3-liner for kids:
+			</p>
+			<p>
+				Mix two strings to make the third.
+			</p>
+			<p>
+				Check every possible merge.
+			</p>
+			<p>
+				Don’t lose track of match order!
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				🧠 Mnemonics:
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				"Check char match" → if s1[i] == s3[i+j] and dp[j]
+			</p>
+			<p>
+				"Also try s2" → if s2[j] == s3[i+j] and nextDp
+			</p>
+			<p>
+				"Update DP" → dp[j] = res
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				7.)
+			</p>
+			<p>
+				class Solution:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; def longestIncreasingPath(self, matrix: List[List[int]]) -&gt; int:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; ROWS, COLS = len(matrix), len(matrix[0])
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp = {}&#xa0; # (r, c) -&gt; LIP
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; def dfs(r, c, prevVal):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; if (r &lt; 0 or r == ROWS or c &lt; 0 or 
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; c == COLS or matrix[r][c] &lt;= prevVal
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; ):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return 0
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; if (r, c) in dp:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return dp[(r, c)]
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; res = 1
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; res = max(res, 1 + dfs(r + 1, c, matrix[r][c]))
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; res = max(res, 1 + dfs(r - 1, c, matrix[r][c]))
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; res = max(res, 1 + dfs(r, c + 1, matrix[r][c]))
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; res = max(res, 1 + dfs(r, c - 1, matrix[r][c]))
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp[(r, c)] = res
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return res
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for r in range(ROWS):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for c in range(COLS):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dfs(r, c, -1)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return max(dp.values())
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				7. Longest Increasing Path in Matrix
+			</p>
+			<p>
+				✅ One-liner:
+			</p>
+			<p>
+				DFS + memoization to get the longest increasing path from each cell.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				👶 3-liner for kids:
+			</p>
+			<p>
+				Climb from one number to bigger ones.
+			</p>
+			<p>
+				Remember best steps from each point.
+			</p>
+			<p>
+				Return the longest trail!
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				🧠 Mnemonics:
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				"Cache results" → if (r, c) in dp: return dp[(r, c)]
+			</p>
+			<p>
+				"Try all 4 dirs" → dfs(r ± 1, c), dfs(r, c ± 1)
+			</p>
+			<p>
+				"Max of all paths" → return max(dp.values())
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				8.)
+			</p>
+			<p>
+				class Solution:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; def numDistinct(self, s: str, t: str) -&gt; int:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; m, n = len(s), len(t)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp = [0] * (n + 1)
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp[n] = 1
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for i in range(m - 1, -1, -1):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; prev = 1
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for j in range(n - 1, -1, -1):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; res = dp[j]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; if s[i] == t[j]:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; res += prev
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; prev = dp[j]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp[j] = res 
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; 
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return dp[0]
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				8. Distinct Subsequences
+			</p>
+			<p>
+				✅ One-liner:
+			</p>
+			<p>
+				Use DP to count all ways s can form t as a subsequence.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				👶 3-liner for kids:
+			</p>
+			<p>
+				You can skip letters in s to form t.
+			</p>
+			<p>
+				Every match gives a new way.
+			</p>
+			<p>
+				Add the number of paths together!
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				🧠 Mnemonics:
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				"Base case" → dp[n] = 1
+			</p>
+			<p>
+				"Match char" → if s[i] == t[j]: res += prev
+			</p>
+			<p>
+				"Update dp" → dp[j] = res
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				9.)
+			</p>
+			<p>
+				class Solution:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; def minDistance(self, word1: str, word2: str) -&gt; int:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; m, n = len(word1), len(word2)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; if m &lt; n:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; m, n = n, m
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; word1, word2 = word2, word1
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; 
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp = [n - i for i in range(n + 1)]
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for i in range(m - 1, -1, -1):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; nextDp = dp[n]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp[n] = m - i
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for j in range(n - 1, -1, -1):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; temp = dp[j]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; if word1[i] == word2[j]:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp[j] = nextDp
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; else:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp[j] = 1 + min(dp[j], dp[j + 1], nextDp)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; nextDp = temp
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return dp[0]
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				9. Edit Distance
+			</p>
+			<p>
+				✅ One-liner:
+			</p>
+			<p>
+				Bottom-up DP tracks minimum ops to convert one string to another.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				👶 3-liner for kids:
+			</p>
+			<p>
+				To match two words, you can insert, delete, or replace.
+			</p>
+			<p>
+				Take the fewest steps possible.
+			</p>
+			<p>
+				Try from the end back to the start.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				🧠 Mnemonics:
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				"Match? Skip" → if word1[i] == word2[j]: dp[j] = nextDp
+			</p>
+			<p>
+				"Else try all" → dp[j] = 1 + min(dp[j], dp[j + 1], nextDp)
+			</p>
+			<p>
+				"Track next" → nextDp = temp
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				10.)
+			</p>
+			<p>
+				class Solution:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; def maxCoins(self, nums):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; n = len(nums)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; new_nums = [1] + nums + [1]
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp = [[0] * (n + 2) for _ in range(n + 2)]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for l in range(n, 0, -1):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for r in range(l, n + 1):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for i in range(l, r + 1):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; coins = new_nums[l - 1] * new_nums[i] * new_nums[r + 1]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; coins += dp[l][i - 1] + dp[i + 1][r]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp[l][r] = max(dp[l][r], coins)
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return dp[1][n]
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				10. Burst Balloons
+			</p>
+			<p>
+				✅ One-liner:
+			</p>
+			<p>
+				Use interval DP to track max coins from bursting every balloon last in range.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				👶 3-liner for kids:
+			</p>
+			<p>
+				Pop balloons for coins!
+			</p>
+			<p>
+				Try each as the last in range.
+			</p>
+			<p>
+				Store the best coins for each section.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				🧠 Mnemonics:
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				"Add padding" → new_nums = [1] + nums + [1]
+			</p>
+			<p>
+				"Burst last in (l,r)" → coins = L * i * R + dp[l][i-1] + dp[i+1][r]
+			</p>
+			<p>
+				"Try all i" → for i in range(l, r + 1):
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				11.0
+			</p>
+			<p>
+				class Solution:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0; def isMatch(self, s: str, p: str) -&gt; bool:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp = [False] * (len(p) + 1)
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp[len(p)] = True
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; 
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for i in range(len(s), -1, -1):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp1 = dp[len(p)]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp[len(p)] = (i == len(s))
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; 
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; for j in range(len(p) - 1, -1, -1):
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; match = i &lt; len(s) and (s[i] == p[j] or p[j] == ".")
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; res = False
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; if (j + 1) &lt; len(p) and p[j + 1] == "*":
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; res = dp[j + 2]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; if match:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; res |= dp[j]
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; elif match:
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; res = dp1
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; dp[j], dp1 = res, dp[j]
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; return dp[0]
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				11. Regular Expression Matching
+			</p>
+			<p>
+				✅ One-liner:
+			</p>
+			<p>
+				Match s and p with backtracking and support for . and *.
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				👶 3-liner for kids:
+			</p>
+			<p>
+				Match characters step-by-step.
+			</p>
+			<p>
+				If * shows up, skip or use it.
+			</p>
+			<p>
+				Use memory to speed up match!
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				🧠 Mnemonics:
+			</p>
+			<p>
+				&#xa0;
+			</p>
+			<p>
+				"Check match" → s[i] == p[j] or p[j] == '.'
+			</p>
+			<p>
+				"Handle '*'" → res = dp[j + 2] or (match and dp[j])
+			</p>
+			<p>
+				"Update DP" → dp[j], dp1 = res, dp[j]
+			</p>
+			<p>
+				&#xa0;
+			</p>
+	<p style="bottom: 10px; right: 10px; position: absolute;"><a href="https://wordtohtml.net" target="_blank" style="font-size:11px; color: #d0d0d0">Converted to HTML with WordToHTML.net</a> <span style="font-size:11px; color: #d0d0d0">|</span> <a href="https://wordtohtml.net" target="_blank" style="font-size:11px; color: #d0d0d0">Email Signature Generator</a></p>
+</body>
+</html>
